@@ -4,7 +4,7 @@ use Test::Strict;
 use File::Temp qw( tempdir tempfile );
 
 my $HAS_WIN32 = 0;
-if ($^O =~ /Win|Dos/i) { # Load Win32 if we are under Windows and if module is available
+if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is available
   eval q{ use Win32 };
   if ($@) {
     warn "Optional module Win32 missing, consider installing\n";
