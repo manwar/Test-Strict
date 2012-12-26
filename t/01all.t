@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
+use Test::More tests => 35;
 use Test::Strict;
 use File::Temp qw( tempdir tempfile );
 
@@ -29,19 +30,19 @@ strict_ok( 'Test::Strict' );
 warnings_ok( $0 );
 
 my $warning_file1 = make_warning_file1();
-warnings_ok( $warning_file1 );
+warnings_ok( $warning_file1, 'file1' );
 
 my $warning_file2 = make_warning_file2();
-warnings_ok( $warning_file2 );
+warnings_ok( $warning_file2, 'file2' );
 
 my $warning_file3 = make_warning_file3();
-warnings_ok( $warning_file3 );
+warnings_ok( $warning_file3, 'file3' );
 
 my $warning_file4 = make_warning_file4();
-warnings_ok( $warning_file4 );
+warnings_ok( $warning_file4, 'file4' );
 
 my $warning_file5 = make_warning_file5();
-warnings_ok( $warning_file5 );
+warnings_ok( $warning_file5, 'file5' );
 
 {
   my ($warnings_files_dir, $file_to_skip) = make_warning_files();
@@ -49,7 +50,7 @@ warnings_ok( $warning_file5 );
   local $Test::Strict::TEST_SKIP = [ $file_to_skip ];
   all_perl_files_ok( $warnings_files_dir );
 }
-
+exit;
 
 
 sub make_warning_file1 {
