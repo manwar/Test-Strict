@@ -1,0 +1,58 @@
+0.14 - Sat Feb 13 19:40:00 2010 EST
+  - rt #44216: now taint safe - thanks Lars
+  - rt #44607: compatible with Moose and Mouse - thanks Apocalypse
+  - Removed Test::Pod dependency
+
+0.13 - Fri Jan 30 19:25:00 2009 PST
+  - rt #42922: Assignment to read only value - thanks Andreas
+
+0.12 - Sun Jan 25 17:55:00 2009 PST
+  - rt #42575: Can deal with filenames with spaces - thanks Renee
+  - rt #42576: Deal with windows dos shorten filnames - thanks Renee
+
+0.11 - Sun Jan 18 20:30:00 2009 PST
+  - rt #41604: Allow to skip "trusted" files - thanks Jon
+
+0.10 - Sun Jan 18 19:50:00 2009 PST
+  - rt #41524: Fixed warning "no_plan takes no arguments ..." - thanks Apocalypse
+
+0.09 - Sat Feb 23 23:50:00 2008 GMT
+  - Addressed rt #32704 Cleaning up /tmp directory (ANDK)
+  - Added $DEVEL_COVER_OPTIONS to give more control on which files to select for code coverage
+
+0.08 - Tue Sep  5 16:50:00 2006 GMT
+  - Adressed ticket #21196. (smueller)
+  - Made the untaint pattern less vulnerable to win32
+    paths. (smueller)
+  - Now quoting meta-characters before use in regex.
+    (smueller)
+  - Skipping tests that fail on win32 because of the
+    testing procedure (smueller)
+
+0.07 - Mon May 29 03:45:00 2005 GMT
+  Skip blib/man directory in all_perl_files_ok() and all_cover_ok()
+
+0.06 - Mon Mar 25 00:10:00 2005 GMT
+  Skip blib/libdoc directory in all_perl_files_ok() and all_cover_ok()
+
+0.05 - Mon Mar 21 21:10:00 2005 GMT
+  Added $TEST_SYNTAX
+        $TEST_STRICT
+        $TEST_WARNINGS
+    - Thanks Christopher Laco
+
+0.04 - Mon Mar 21 20:40:00 2005 GMT
+  Fixed warnings_ok() - now it detects "use warnings FATAL => 'all';" - Thanks Christopher Laco
+
+0.03 - Sun Mar 20 23:10:00 2005 GMT
+  Added untainting - Thanks Christopher Laco
+  Added $Test::Strict::UNTAINT_PATTERN
+  Added better detection of cover binary
+  Added warnings_ok()
+
+0.02 - Sat Mar 19 00:17:00 2005 GMT
+  Added detection of 'cover' binary
+  Added $Test::Strict::COVER
+
+0.01 - Sat Mar 12 01:14:13 2005 GMT
+  Initial release
