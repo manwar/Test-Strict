@@ -14,7 +14,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
     $HAS_WIN32 = 1;
   }
 }
-plan  tests => ($HAS_WIN32 ? 39 : 36);
+plan  tests => 36;
 
 ##
 ## This should check all perl files in the distribution
@@ -164,5 +164,5 @@ print "Hello world";
 DUMMY
   push @files, $filename4;
 
-  return ($tmpdir, \@files, $HAS_WIN32 ? Win32::GetLongPathName($filename3) : $filename3);
+  return ($tmpdir, \@files, $filename3);
 }
