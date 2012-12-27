@@ -1,10 +1,10 @@
 
-0.15
-  - disable the coverage testing unless a flag is enabled
-    as that was stuck on Windows. rt #81849 and rt #79515
-  - Fix test on Cygwin rt #44187
-  - Add link to Github repository
-  - Co-maintainer: Gabor Szabo (SZABGAB)
+0.15 - Thu Dec 27 09:59:29 2012
+  - rt #81849 and rt #79515: disable the coverage testing unless
+    a flag is enabled as that was stuck on Windows.
+  - rt #44187: Fix test on Cygwin.
+  - Add link to Github repository.
+  - Co-maintainer: Gabor Szabo (SZABGAB).
 
 0.14 - Sat Feb 13 19:40:00 2010 EST
   - rt #44216: now taint safe - thanks Lars
