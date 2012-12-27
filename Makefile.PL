@@ -12,4 +12,9 @@ WriteMakefile(
       'Devel::Cover'  => 0.43,
       'File::Temp'    => 0.01,
         },
+    META_MERGE        => {
+       resources => {
+           repository  =>  'https://github.com/szabgab/Test-Strict',
+       },
+	},
 );
