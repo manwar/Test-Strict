@@ -15,6 +15,7 @@ WriteMakefile(
     META_MERGE        => {
        resources => {
            repository  =>  'https://github.com/szabgab/Test-Strict',
+            license    => 'http://dev.perl.org/licenses/',
        },
 	},
 );

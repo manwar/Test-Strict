@@ -1,4 +1,5 @@
 
+0.16 Fri Dec 28 09:38:47 2012
   - Fix the Windows recognition regex in the code as well.
   - rt #80341: Accept use Modern::Perl as strict and warnings. (Peter Vereshagin)
   - rt #55186: Be less strict about filenames when calling syntax_ok directly
