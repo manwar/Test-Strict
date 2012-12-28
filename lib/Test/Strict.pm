@@ -80,7 +80,7 @@ $TEST_WARNINGS = 0;  # Check use warnings;
 $TEST_SKIP     = []; # List of files to skip check
 $DEVEL_COVER_OPTIONS = '+ignore,".Test.Strict\b"';
 $DEVEL_COVER_DB      = 'cover_db';
-my $IS_WINDOWS = $^O =~ /win|dos/i;
+my $IS_WINDOWS = $^O =~ /MSwin/i;
 
 my $Test  = Test::Builder->new;
 my $updir = File::Spec->updir();
