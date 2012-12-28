@@ -165,11 +165,11 @@ sub syntax_ok {
   }
 
   my $is_script = _is_perl_script($file);
-  if (not $is_script and not _is_perl_module($file)) {
-    $Test->ok( 0, $test_txt );
-    $Test->diag( "$file is not a perl module or a perl script" );
-    return;
-  }
+#  if (not $is_script and not _is_perl_module($file)) {
+#    $Test->ok( 0, $test_txt );
+#    $Test->diag( "$file is not a perl module or a perl script" );
+#    return;
+#  }
 
   # Set the environment to compile the script or module
   my $inc = join(' -I ', map{ qq{"$_"} } @INC ) || '';

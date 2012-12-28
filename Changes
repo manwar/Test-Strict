@@ -1,6 +1,8 @@
 
   - Fix the Windows recognition regex in the code as well.
-  - rt #80341: Accept use Modern::Perl as strict and warnings. peter.vereshagin
+  - rt #80341: Accept use Modern::Perl as strict and warnings. (Peter Vereshagin)
+  - rt #55186: Be less strict about filenames when calling syntax_ok directly
+       (Frank Lichtenheld)
 
 0.15 - Thu Dec 27 09:59:29 2012
   - rt #81849 and rt #79515: disable the coverage testing unless

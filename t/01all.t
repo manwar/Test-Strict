@@ -14,7 +14,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
     $HAS_WIN32 = 1;
   }
 }
-plan  tests => 38;
+plan  tests => 41;
 
 ##
 ## This should check all perl files in the distribution
@@ -39,6 +39,12 @@ diag $modern_perl_file1;
 warnings_ok( $modern_perl_file1, 'warn modern_perl1' );
 strict_ok( $modern_perl_file1, 'strict modern_perl1' );
 
+
+my $extensionless_file = make_extensionless_perl_file1();
+diag $extensionless_file;
+warnings_ok( $extensionless_file, 'warn extensionless_file' );
+strict_ok( $extensionless_file, 'strict extensionless_file' );
+syntax_ok( $extensionless_file, 'syntax extensionless_file' );
 
 my $warning_file1 = make_warning_file1();
 diag "File1: $warning_file1";
@@ -75,6 +81,17 @@ sub make_modern_perl_file1 {
   my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pL' );
   print $fh <<'DUMMY';
 #!/usr/bin/perl
+use Modern::Perl;
+
+print "hello world";
+
+DUMMY
+  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
+}
+sub make_extensionless_perl_file1 {
+  my $tmpdir = tempdir( CLEANUP => 1 );
+  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '' );
+  print $fh <<'DUMMY';
 use Modern::Perl;
 
 print "hello world";
