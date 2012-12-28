@@ -198,6 +198,7 @@ sub syntax_ok {
 
 Check if C<$file> contains a C<use strict;> statement.
 C<use Moose> and C<use Mouse> are also considered valid.
+use Modern::Perl is also accepted.
 
 This is a pretty naive test which may be fooled in some edge cases.
 For a module, the path (lib/My/Module.pm) or the name (My::Module) can be both used.
@@ -232,12 +233,12 @@ sub strict_ok {
 Check if warnings have been turned on.
 
 If C<$file> is a module, check if it contains a C<use warnings;> or C<use warnings::...>
-or C<use Moose> or C<use Mouse> statement.
+or C<use Moose> or C<use Mouse> statement. use Modern::Perl is also accepted.
 If the perl version is <= 5.6, this test is skipped (C<use warnings> appeared in perl 5.6).
 
 If C<$file> is a script, check if it starts with C<#!...perl -w>.
 If the -w is not found and perl is >= 5.6, check for a C<use warnings;> or C<use warnings::...>
-or C<use Moose> or C<use Mouse> statement.
+or C<use Moose> or C<use Mouse> statement. use Modern::Perl is also accepted.
 
 This is a pretty naive test which may be fooled in some edge cases.
 For a module, the path (lib/My/Module.pm) or the name (My::Module) can be both used.
