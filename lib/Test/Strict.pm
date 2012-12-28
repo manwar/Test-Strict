@@ -213,7 +213,11 @@ sub strict_ok {
     next if (/^\s*#/); # Skip comments
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
-    if ( /\buse\s+strict\s*;/ or /\buse\s+Moose\b/ or /\buse\s+Mouse\b/ ) {
+    if ( /\buse\s+strict\s*;/
+      or /\buse\s+Moose\b/
+      or /\buse\s+Mouse\b/
+      or /\buse\s+Modern::Perl\b/
+    ) {
       $Test->ok(1, $test_txt);
       return 1;
     }
@@ -264,7 +268,11 @@ sub warnings_ok {
     next if (/^\s*#/); # Skip comments
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
-  if ( /\buse\s+warnings(\s|::|;)/ or /\buse\s+Moose\b/ or /\buse\s+Mouse\b/ ) {
+  if ( /\buse\s+warnings(\s|::|;)/
+    or /\buse\s+Moose\b/
+    or /\buse\s+Mouse\b/
+    or /\buse\s+Modern::Perl\b/
+  ) {
       $Test->ok(1, $test_txt);
       return 1;
     }
