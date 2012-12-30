@@ -1,4 +1,5 @@
 
+0.17 Sun Dec 30 08:13:42 2012
   - Add license field to META files
   - eliminate unwanted dependency on Modern::Perl
 
