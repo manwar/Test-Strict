@@ -14,7 +14,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
     $HAS_WIN32 = 1;
   }
 }
-plan  tests => 41;
+plan  tests => 43;
 
 ##
 ## This should check all perl files in the distribution
@@ -40,8 +40,12 @@ warnings_ok( $modern_perl_file1, 'warn modern_perl1' );
 strict_ok( $modern_perl_file1, 'strict modern_perl1' );
 
 
+# let's make sure that a file that is not recognized as "Perl file"
+# still lets the syntax_ok test work
 my $extensionless_file = make_extensionless_perl_file1();
 diag $extensionless_file;
+ok ! Test::Strict::_is_perl_module($extensionless_file);
+ok ! Test::Strict::_is_perl_script($extensionless_file);
 warnings_ok( $extensionless_file, 'warn extensionless_file' );
 strict_ok( $extensionless_file, 'strict extensionless_file' );
 syntax_ok( $extensionless_file, 'syntax extensionless_file' );
@@ -92,7 +96,8 @@ sub make_extensionless_perl_file1 {
   my $tmpdir = tempdir( CLEANUP => 1 );
   my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '' );
   print $fh <<'DUMMY';
-use Modern::Perl;
+use strict;
+use warnings;
 
 print "hello world";
 

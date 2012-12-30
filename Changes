@@ -1,5 +1,6 @@
 
   - Add license field to META files
+  - eliminate unwanted dependency on Modern::Perl
 
 0.16 Fri Dec 28 09:38:47 2012
   - Fix the Windows recognition regex in the code as well.
