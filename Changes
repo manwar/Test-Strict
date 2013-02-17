@@ -1,3 +1,4 @@
+0.18 Sun Feb 17 13:54:13 2013
   - RT #83388 - use Moose::Autobox should not be seen as use Moose; (Peter Vereshagin)
 
 0.17 Sun Dec 30 08:13:42 2012
