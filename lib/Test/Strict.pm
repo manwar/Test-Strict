@@ -472,6 +472,10 @@ L<Test::More>, L<Test::Pod>. L<Test::Distribution>, L<Test:NoWarnings>
 
 Pierre Denis, C<< <pdenis@gmail.com> >>.
 
+=head1 MAINTAINER
+
+L<Gabor Szabo|http://szabgab.com/>
+
 =head1 COPYRIGHT
 
 Copyright 2005, 2010 Pierre Denis, All Rights Reserved.
