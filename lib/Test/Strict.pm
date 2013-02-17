@@ -215,7 +215,7 @@ sub strict_ok {
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
     if ( /\buse\s+strict\s*;/
-      or /\buse\s+Moose\b/
+      or /\buse\s+Moose(?:[^\w:]|$)/
       or /\buse\s+Mouse\b/
       or /\buse\s+Modern::Perl\b/
     ) {

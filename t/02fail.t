@@ -17,7 +17,7 @@ BEGIN {
   }
 }
 
-use Test::More tests => 10;
+use Test::More tests => 13;
 use File::Temp qw( tempdir tempfile );
 
 my $perl  = $^X || 'perl';
@@ -28,6 +28,7 @@ test1();
 test2();
 test3();
 test4();
+test5();
 
 exit;
 
@@ -70,6 +71,16 @@ sub test4 {
   like( $content, qr/not ok \d+ \- use warnings/, "Does not have use warnings" );
 }
 
+sub test5 {
+  my $dir = make_moose_bad_file();
+  my ($fh, $outfile) = tempfile( UNLINK => 1 );
+  ok( `$perl $inc -MTest::Strict -e "all_perl_files_ok( '$dir' )" 2>&1 > $outfile` );
+  local $/ = undef;
+  my $content = <$fh>;
+  like( $content, qr/^ok 1 - Syntax check /m, "Syntax ok" );
+  like( $content, qr/not ok 2 - use strict /, "Does not have use strict" );
+}
+
 
 sub make_bad_file {
   my $tmpdir = tempdir( CLEANUP => 1 );
@@ -102,6 +113,17 @@ blah
 =cut
 # a comment
 undef;use    strict ; foobarbaz + 1; # another comment
+DUMMY
+  return $tmpdir;
+}
+
+sub make_moose_bad_file {
+  my $tmpdir = tempdir( CLEANUP => 1 );
+  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
+  print $fh <<'DUMMY';
+# Makes methods for plain Perl types with autobox
+# No 'use Moose' here and no strictures turned on
+use Moose::Autobox;
 DUMMY
   return $tmpdir;
 }
