@@ -90,7 +90,12 @@ sub test5 {
 sub make_bad_file {
   my $tmpdir = tempdir( CLEANUP => 1 );
   my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pL' );
-  print $fh <<'DUMMY';
+  print $fh _bad_file_content();
+  return $tmpdir;
+}
+
+sub _bad_file_content {
+    return <<'DUMMY';
 print "Hello world without use strict";
 # use strict;
 =over
@@ -106,7 +111,6 @@ use strict;
 =cut
 
 DUMMY
-  return $tmpdir;
 }
 
 sub make_another_bad_file {
