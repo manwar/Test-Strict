@@ -221,24 +221,48 @@ sub _strict_ok {
     next if (/^\s*#/); # Skip comments
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
-    if ( /\buse\s+strict\s*;/
-      or _uses_moosish($_)
-      or /\buse\s+Modern::Perl\b/
-    ) {
-       return 1;
+    foreach my $name (modules_enabling_strict()) {
+      if (/\buse\s+$name(?:[;\s]|$)/) {
+        return 1;
+      }
     }
   }
   return;
 }
 
-# TODO: Better copy the list from here:
-# https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
-sub _uses_moosish {
-  my ($line) = @_;
-  foreach my $name (qw(Moose Moose::Role MooseX::Declare MooseX::Types Mouse Mouse::Role)) {
-    return 1 if $line =~ /\buse\s+$name(?:[^\w:]|$)/
-  }
-  return;
+=head2 modules_enabling_strict
+
+Experimental. Returning a list of modules and pragmata that enable strict
+
+List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
+
+=cut
+
+sub modules_enabling_strict {
+ return qw(
+   strict
+   Any::Moose
+   Class::Spiffy
+   Coat
+   common::sense
+   Dancer
+   Mo
+   Modern::Perl
+   Mojo::Base
+   Moo
+   Moose
+   Moose::Role
+   MooseX::Declare
+   MooseX::Types
+   Mouse
+   Mouse::Role
+   perl5
+   perl5i::1
+   perl5i::2
+   perl5i::latest
+   Spiffy
+   strictures
+ );
 }
 
 
