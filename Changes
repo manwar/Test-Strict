@@ -1,4 +1,5 @@
-  - Add more Moosish modules to the list of modules that set strict. (suggested by RIBASUSHI)
+  - Add more list of modules that set strict. (suggested by RIBASUSHI, DAXIM)
+  - Experimental function modules_enabling_strict() to return thos module names.
 
 0.19 Wed Feb 20 11:12:39 2013
   - Skip test if Moose::Autobox is not installed.
