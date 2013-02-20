@@ -468,6 +468,10 @@ this may lead to some side effects.
 
 L<Test::More>, L<Test::Pod>. L<Test::Distribution>, L<Test:NoWarnings>
 
+=head1 REPOSITORY
+
+L<https://github.com/szabgab/Test-Strict>
+
 =head1 AUTHOR
 
 Pierre Denis, C<< <pdenis@gmail.com> >>.
