@@ -210,7 +210,14 @@ sub strict_ok {
   my $test_txt = shift || "use strict   $file";
   $file = _module_to_path($file);
   open my $fh, '<', $file or do { $Test->ok(0, $test_txt); $Test->diag("Could not open $file: $!"); return; };
-  while (<$fh>) {
+  my $ok = _strict_ok($fh);
+  $Test->ok($ok, $test_txt);
+  return $ok;
+}
+
+sub _strict_ok {
+  my ($in) = @_;
+  while (<$in>) {
     next if (/^\s*#/); # Skip comments
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
@@ -218,11 +225,9 @@ sub strict_ok {
       or _uses_moosish($_)
       or /\buse\s+Modern::Perl\b/
     ) {
-      $Test->ok(1, $test_txt);
-      return 1;
+       return 1;
     }
   }
-  $Test->ok(0, $test_txt);
   return;
 }
 
