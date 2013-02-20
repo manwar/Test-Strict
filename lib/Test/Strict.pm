@@ -215,8 +215,7 @@ sub strict_ok {
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
     if ( /\buse\s+strict\s*;/
-      or /\buse\s+Moose(?:[^\w:]|$)/
-      or /\buse\s+Mouse\b/
+      or _uses_moosish($_)
       or /\buse\s+Modern::Perl\b/
     ) {
       $Test->ok(1, $test_txt);
@@ -224,6 +223,16 @@ sub strict_ok {
     }
   }
   $Test->ok(0, $test_txt);
+  return;
+}
+
+# TODO: Better copy the list from here:
+# https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
+sub _uses_moosish {
+  my ($line) = @_;
+  foreach my $name (qw(Moose Moose::Role MooseX::Declare MooseX::Types Mouse Mouse::Role)) {
+    return 1 if $line =~ /\buse\s+$name(?:[^\w:]|$)/
+  }
   return;
 }
 
