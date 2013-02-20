@@ -17,12 +17,14 @@ BEGIN {
   }
 }
 
-use Test::More tests => 13;
+use Test::More tests => 14;
 use File::Temp qw( tempdir tempfile );
 
 my $perl  = $^X || 'perl';
 my $inc = join(' -I ', @INC) || '';
 $inc = "-I $inc" if $inc;
+
+require Test::Strict;
 
 test1();
 test2();
@@ -34,6 +36,10 @@ exit;
 
 
 sub test1 {
+  my $bad_file_content = _bad_file_content();
+  open my $fh1, '<', \$bad_file_content;
+  ok !Test::Strict::_strict_ok($fh1), 'bad_file';
+
   my $dir = make_bad_file();
   my ($fh, $outfile) = tempfile( UNLINK => 1 );
   ok( `$perl $inc -MTest::Strict -e "all_perl_files_ok( '$dir' )" 2>&1 > $outfile`, 'all_perl_files_ok' );
