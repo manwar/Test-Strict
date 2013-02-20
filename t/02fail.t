@@ -17,7 +17,7 @@ BEGIN {
   }
 }
 
-use Test::More tests => 14;
+use Test::More tests => 15;
 use File::Temp qw( tempdir tempfile );
 
 my $perl  = $^X || 'perl';
@@ -31,6 +31,13 @@ test2();
 test3();
 test4();
 test5();
+
+TODO: {
+  local $TODO = 'improve strict matching!';
+  my $code = q{print "use strict "};
+  open my $fh1, '<', \$code;
+  ok !Test::Strict::_strict_ok($fh1), 'use strict in print';
+}
 
 exit;
 

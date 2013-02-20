@@ -222,6 +222,7 @@ sub _strict_ok {
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
     foreach my $name (modules_enabling_strict()) {
+      # TODO: improve this matching (e.g. see TODO test)
       if (/\buse\s+$name(?:[;\s]|$)/) {
         return 1;
       }
