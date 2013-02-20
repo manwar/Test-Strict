@@ -1,3 +1,6 @@
+0.19 Wed Feb 20 11:12:39 2013
+  - Skip test if Moose::Autobox is not installed.
+
 0.18 Sun Feb 17 13:54:13 2013
   - RT #83388 - use Moose::Autobox should not be seen as use Moose; (Peter Vereshagin)
 
