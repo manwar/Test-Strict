@@ -36,7 +36,7 @@ exit;
 sub test1 {
   my $dir = make_bad_file();
   my ($fh, $outfile) = tempfile( UNLINK => 1 );
-  ok( `$perl $inc -MTest::Strict -e "all_perl_files_ok( '$dir' )" 2>&1 > $outfile` );
+  ok( `$perl $inc -MTest::Strict -e "all_perl_files_ok( '$dir' )" 2>&1 > $outfile`, 'all_perl_files_ok' );
   local $/ = undef;
   my $content = <$fh>;
   like( $content, qr/^ok 1 - Syntax check /m, "Syntax ok" );
