@@ -1,5 +1,8 @@
-  - Add more list of modules that set strict. (suggested by RIBASUSHI, DAXIM)
+  - Add more modules that set strict and warnings. (suggested by RIBASUSHI, DAXIM)
+  - Remove warnings::register
   - Experimental function modules_enabling_strict() to return thos module names.
+  - Experimental function modules_enabling_warnings() to return thos module names.
+
 
 0.19 Wed Feb 20 11:12:39 2013
   - Skip test if Moose::Autobox is not installed.

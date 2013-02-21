@@ -266,6 +266,42 @@ sub modules_enabling_strict {
  );
 }
 
+=head2 modules_enabling_warnings
+
+Experimental. Returning a list of modules and pragmata that enable strict
+
+List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
+
+=cut
+
+sub modules_enabling_warnings {
+ return qw(
+    warnings
+    Any::Moose
+    Class::Spiffy
+    Coat
+    common::sense
+    Dancer
+    Mo
+    Modern::Perl
+    Mojo::Base
+    Moo
+    Moose
+    Moose::Role
+    MooseX::Declare
+    MooseX::Types
+    Mouse
+    Mouse::Role
+    perl5
+    perl5i::1
+    perl5i::2
+    perl5i::latest
+    Spiffy
+    strictures
+ );
+}
+
+
 
 =head2 warnings_ok( $file [, $text] )
 
@@ -297,10 +333,17 @@ sub warnings_ok {
   }
 
   open my $fh, '<', $file or do { $Test->ok(0, $test_txt); $Test->diag("Could not open $file: $!"); return; };
-  while (<$fh>) {
+  my $ok = _warnings_ok($is_script, $fh);
+  $Test->ok($ok, $test_txt);
+  return $ok
+}
+
+# TODO unite with _strict_ok
+sub _warnings_ok {
+  my ($is_script, $in) = @_;
+  while (<$in>) {
     if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
       if (/perl\s+\-\w*[wW]/) {
-        $Test->ok(1, $test_txt);
         return 1;
       }
     }
@@ -308,16 +351,12 @@ sub warnings_ok {
     next if (/^\s*#/); # Skip comments
     next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
     last if (/^\s*(__END__|__DATA__)/); # End of code
-  if ( /\buse\s+warnings(\s|::|;)/
-    or /\buse\s+Moose\b/
-    or /\buse\s+Mouse\b/
-    or /\buse\s+Modern::Perl\b/
-  ) {
-      $Test->ok(1, $test_txt);
-      return 1;
+    foreach my $name (modules_enabling_warnings()) {
+      if (/\buse\s+$name(?:[;\s]|$)/) {
+        return 1;
+      }
     }
   }
-  $Test->ok(0, $test_txt);
   return;
 }
 
