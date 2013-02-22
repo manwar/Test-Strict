@@ -1,3 +1,4 @@
+0.20 Fri Feb 22 12:32:03 2013
   - Add more modules that set strict and warnings. (suggested by RIBASUSHI, DAXIM)
   - Remove warnings::register
   - Experimental function modules_enabling_strict() to return thos module names.
