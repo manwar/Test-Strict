@@ -252,6 +252,7 @@ sub modules_enabling_strict {
    Mojo::Base
    Moo
    Moose
+   Moose::Exporter
    Moose::Role
    MooseX::Declare
    MooseX::Types
