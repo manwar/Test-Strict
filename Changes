@@ -1,5 +1,6 @@
-
+0.21 Tue Feb 26 20:32:03 2013
   - Add x_contributors to the META files.
+  - Add Moose::Exporter to the strict and warnings providers (Graham Knop)
 
 0.20 Fri Feb 22 12:32:03 2013
   - Add more modules that set strict and warnings. (suggested by RIBASUSHI, DAXIM)
