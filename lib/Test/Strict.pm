@@ -288,6 +288,7 @@ sub modules_enabling_warnings {
     Mojo::Base
     Moo
     Moose
+    Moose::Exporter
     Moose::Role
     MooseX::Declare
     MooseX::Types

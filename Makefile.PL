@@ -22,6 +22,7 @@ WriteMakefile(
        x_contributors => [
             'Gabor Szabo <szabgab@cpan.org>',
             'Peter Vereshagin <veresc@cpan.org>',
+            'Graham Knop <haarg@cpan.org>',
        ],
 	},
 );
