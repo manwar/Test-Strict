@@ -13,10 +13,15 @@ WriteMakefile(
       'File::Temp'    => 0.01,
         },
     LICENSE           => 'perl',
+    AUTHOR            => 'Pierre Denis <pdenis@cpan.org>',
     META_MERGE        => {
        resources => {
            repository  =>  'https://github.com/szabgab/Test-Strict',
             license    => 'http://dev.perl.org/licenses/',
        },
+       x_contributors => [
+            'Gabor Szabo <szabgab@cpan.org>',
+            'Peter Vereshagin <veresc@cpan.org>',
+       ],
 	},
 );
