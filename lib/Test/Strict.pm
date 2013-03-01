@@ -127,6 +127,7 @@ sub _all_files {
     return if ($File::Find::dir =~ m![\\/]?blib[\\/]libdoc$!); # Filter out pod doc in dist
     return if ($File::Find::dir =~ m![\\/]?blib[\\/]man\d$!); # Filter out pod doc in dist
     return unless (-f $File::Find::name && -r _);
+    return if ($File::Find::name =~ m!\.#.+?[\d\.]+$!);         # Filter out CVS backup files (.#file.revision)
     push @found, File::Spec->canonpath( File::Spec->no_upwards( $File::Find::name ) );
   };
   my $find_arg = {
