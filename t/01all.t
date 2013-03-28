@@ -44,8 +44,8 @@ strict_ok( $modern_perl_file1, 'strict modern_perl1' );
 # still lets the syntax_ok test work
 my $extensionless_file = make_extensionless_perl_file1();
 diag $extensionless_file;
-ok ! Test::Strict::_is_perl_module($extensionless_file);
-ok ! Test::Strict::_is_perl_script($extensionless_file);
+ok ! Test::Strict::_is_perl_module($extensionless_file), "_is_perl_module $extensionless_file";
+ok ! Test::Strict::_is_perl_script($extensionless_file), "_is_perl_script $extensionless_file";
 warnings_ok( $extensionless_file, 'warn extensionless_file' );
 strict_ok( $extensionless_file, 'strict extensionless_file' );
 syntax_ok( $extensionless_file, 'syntax extensionless_file' );
