@@ -14,7 +14,10 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
     $HAS_WIN32 = 1;
   }
 }
-plan  tests => 39;
+
+my $tests = 37;
+$tests += 2 if -e 'blib/lib/Test/Strict.pm';
+plan  tests => $tests;
 
 ##
 ## This should check all perl files in the distribution
@@ -77,6 +80,7 @@ warnings_ok( $warning_file5, 'file5' );
   diag "File to skip: $file_to_skip";
   local $Test::Strict::TEST_WARNINGS = 1;
   local $Test::Strict::TEST_SKIP = [ $file_to_skip ];
+  diag "Start all_perl_files_ok on $warnings_files_dir (should be 2*3 = 6 tests)";
   all_perl_files_ok( $warnings_files_dir );
 }
 exit;
