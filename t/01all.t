@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 37;
+my $tests = 39;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -75,6 +75,20 @@ diag "File5: $warning_file5";
 warnings_ok( $warning_file5, 'file5' );
 
 {
+  my $warning_file6 = make_warning_file6();
+  diag "File6: $warning_file6";
+
+  local @Test::Strict::MODULES_ENABLING_WARNINGS
+    = (@Test::Strict::MODULES_ENABLING_WARNINGS, 'Custom');
+
+  local @Test::Strict::MODULES_ENABLING_STRICT
+    = (@Test::Strict::MODULES_ENABLING_STRICT, 'Custom');
+
+  warnings_ok( $warning_file6, 'file6' );
+  strict_ok( $warning_file6, 'file6' );
+}
+
+{
   my ($warnings_files_dir, $files, $file_to_skip) = make_warning_files();
   diag explain $files;
   diag "File to skip: $file_to_skip";
@@ -83,6 +97,7 @@ warnings_ok( $warning_file5, 'file5' );
   diag "Start all_perl_files_ok on $warnings_files_dir (should be 2*3 = 6 tests)";
   all_perl_files_ok( $warnings_files_dir );
 }
+
 exit;
 
 sub make_modern_perl_file1 {
@@ -169,6 +184,16 @@ DUMMY
   return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
 
+sub make_warning_file6 {
+  my $tmpdir = tempdir( CLEANUP => 1 );
+  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
+  print $fh <<'DUMMY';
+use Custom;
+print "Hello world";
+
+DUMMY
+  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
+}
 
 sub make_warning_files {
   my $tmpdir = tempdir( CLEANUP => 1 );
