@@ -67,7 +67,7 @@ use FindBin qw($Bin);
 use File::Find;
 use Config;
 
-use vars qw( $VERSION $PERL $COVERAGE_THRESHOLD $COVER $UNTAINT_PATTERN $PERL_PATTERN $CAN_USE_WARNINGS $TEST_SYNTAX $TEST_STRICT $TEST_WARNINGS $TEST_SKIP $DEVEL_COVER_OPTIONS $DEVEL_COVER_DB );
+use vars qw( $VERSION $PERL $COVERAGE_THRESHOLD $COVER $UNTAINT_PATTERN $PERL_PATTERN $CAN_USE_WARNINGS $TEST_SYNTAX $TEST_STRICT $TEST_WARNINGS $TEST_SKIP $DEVEL_COVER_OPTIONS $DEVEL_COVER_DB @MODULES_ENABLING_STRICT @MODULES_ENABLING_WARNINGS );
 $VERSION = '0.22';
 $PERL    = $^X || 'perl';
 $COVERAGE_THRESHOLD = 50; # 50%
@@ -234,77 +234,77 @@ sub _strict_ok {
 
 =head2 modules_enabling_strict
 
-Experimental. Returning a list of modules and pragmata that enable strict
+Experimental. Returning a list of modules and pragmata that enable strict.
+To modify this list, change C<@Test::Strict::MODULES_ENABLING_STRICT>.
 
 List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
 
 =cut
 
-sub modules_enabling_strict {
- return qw(
-   strict
-   Any::Moose
-   Class::Spiffy
-   Coat
-   common::sense
-   Dancer
-   Mo
-   Modern::Perl
-   Mojo::Base
-   Moo
-   Moose
-   Moose::Exporter
-   Moose::Role
-   MooseX::Declare
-   MooseX::Types
-   Mouse
-   Mouse::Role
-   perl5
-   perl5i::1
-   perl5i::2
-   perl5i::latest
-   Spiffy
-   strictures
- );
-}
+@MODULES_ENABLING_STRICT = qw(
+  strict
+  Any::Moose
+  Class::Spiffy
+  Coat
+  common::sense
+  Dancer
+  Mo
+  Modern::Perl
+  Mojo::Base
+  Moo
+  Moose
+  Moose::Exporter
+  Moose::Role
+  MooseX::Declare
+  MooseX::Types
+  Mouse
+  Mouse::Role
+  perl5
+  perl5i::1
+  perl5i::2
+  perl5i::latest
+  Spiffy
+  strictures
+);
+
+sub modules_enabling_strict { return @MODULES_ENABLING_STRICT }
 
 =head2 modules_enabling_warnings
 
-Experimental. Returning a list of modules and pragmata that enable strict
+Experimental. Returning a list of modules and pragmata that enable warnings
+To modify this list, change C<@Test::Strict::MODULES_ENABLING_WARNINGS>.
 
 List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
 
 =cut
 
-sub modules_enabling_warnings {
- return qw(
-    warnings
-    Any::Moose
-    Class::Spiffy
-    Coat
-    common::sense
-    Dancer
-    Mo
-    Modern::Perl
-    Mojo::Base
-    Moo
-    Moose
-    Moose::Exporter
-    Moose::Role
-    MooseX::Declare
-    MooseX::Types
-    Mouse
-    Mouse::Role
-    perl5
-    perl5i::1
-    perl5i::2
-    perl5i::latest
-    Spiffy
-    strictures
- );
-}
+@MODULES_ENABLING_WARNINGS = qw(
+  warnings
+  Any::Moose
+  Class::Spiffy
+  Coat
+  common::sense
+  Dancer
+  Mo
+  Modern::Perl
+  Mojo::Base
+  Moo
+  Moose
+  Moose::Exporter
+  Moose::Role
+  MooseX::Declare
+  MooseX::Types
+  Mouse
+  Mouse::Role
+  perl5
+  perl5i::1
+  perl5i::2
+  perl5i::latest
+  Spiffy
+  strictures
+);
 
-
+sub modules_enabling_warnings { return @MODULES_ENABLING_WARNINGS }
 
 =head2 warnings_ok( $file [, $text] )
 
