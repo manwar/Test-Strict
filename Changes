@@ -1,6 +1,12 @@
+Test::Strict - Check syntax, presence of use strict; and test coverage
+
+
 0.23 2014-03-06T10:39:05Z
   - Standardize dates in the Changes file.
-
+  -  Replace modules_enabling_warnings() by @Test::Strict::MODULES_ENABLING_WARNINGS
+     and modules_enabling_strict() by @Test::Strict::MODULES_ENABLING_STRICT
+     and by that allow the user to customize it. (thaljef - Jeffrey Thalhammer)
+     RT #93443
 
 0.22 2013-03-01T07:39:05Z
   - Exclude the MYMETA files from the distribution.
