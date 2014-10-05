@@ -68,7 +68,7 @@ use File::Find;
 use Config;
 
 use vars qw( $VERSION $PERL $COVERAGE_THRESHOLD $COVER $UNTAINT_PATTERN $PERL_PATTERN $CAN_USE_WARNINGS $TEST_SYNTAX $TEST_STRICT $TEST_WARNINGS $TEST_SKIP $DEVEL_COVER_OPTIONS $DEVEL_COVER_DB @MODULES_ENABLING_STRICT @MODULES_ENABLING_WARNINGS );
-$VERSION = '0.23';
+$VERSION = '0.24';
 $PERL    = $^X || 'perl';
 $COVERAGE_THRESHOLD = 50; # 50%
 $UNTAINT_PATTERN    = qr|^(.*)$|;
@@ -237,13 +237,14 @@ sub _strict_ok {
 Experimental. Returning a list of modules and pragmata that enable strict.
 To modify this list, change C<@Test::Strict::MODULES_ENABLING_STRICT>.
 
-List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
+List taken from https://metacpan.org/pod/Module::CPANTS::Kwalitee::Uses v95
 
 =cut
 
 @MODULES_ENABLING_STRICT = qw(
   strict
   Any::Moose
+  Catmandu::Sane
   Class::Spiffy
   Coat
   common::sense
@@ -252,10 +253,12 @@ List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib
   Modern::Perl
   Mojo::Base
   Moo
+  Moo::Role
   Moose
   Moose::Exporter
   Moose::Role
   MooseX::Declare
+  MooseX::Role::Parameterized
   MooseX::Types
   Mouse
   Mouse::Role
@@ -263,6 +266,7 @@ List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib
   perl5i::1
   perl5i::2
   perl5i::latest
+  Role::Tiny
   Spiffy
   strictures
 );
@@ -274,13 +278,14 @@ sub modules_enabling_strict { return @MODULES_ENABLING_STRICT }
 Experimental. Returning a list of modules and pragmata that enable warnings
 To modify this list, change C<@Test::Strict::MODULES_ENABLING_WARNINGS>.
 
-List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib/Module/CPANTS/Kwalitee/Uses.pm
+List taken from https://metacpan.org/pod/Module::CPANTS::Kwalitee::Uses v95
 
 =cut
 
 @MODULES_ENABLING_WARNINGS = qw(
   warnings
   Any::Moose
+  Catmandu::Sane
   Class::Spiffy
   Coat
   common::sense
@@ -289,10 +294,12 @@ List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib
   Modern::Perl
   Mojo::Base
   Moo
+  Moo::Role
   Moose
   Moose::Exporter
   Moose::Role
   MooseX::Declare
+  MooseX::Role::Parameterized
   MooseX::Types
   Mouse
   Mouse::Role
@@ -300,6 +307,7 @@ List taken from https://metacpan.org/source/DAXIM/Module-CPANTS-Analyse-0.86/lib
   perl5i::1
   perl5i::2
   perl5i::latest
+  Role::Tiny
   Spiffy
   strictures
 );

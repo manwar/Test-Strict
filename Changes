@@ -1,5 +1,8 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.24 2014-10-05T08:28:00Z
+  - add Catmandu::Sane, Moo::Role, MooseX::Role::Parameterized, Role::Tiny
+    to the list of modules implying strict and warnings. #6
 
 0.23 2014-03-06T10:39:05Z
   - Standardize dates in the Changes file.
