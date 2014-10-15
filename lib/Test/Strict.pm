@@ -228,6 +228,9 @@ sub _strict_ok {
         return 1;
       }
     }
+    if (/\buse\s+(5.01\d+)/ and $1 >= 5.012) {
+      return 1;
+    }
   }
   return;
 }

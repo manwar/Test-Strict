@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 39;
+my $tests = 40;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -97,6 +97,20 @@ warnings_ok( $warning_file5, 'file5' );
   diag "Start all_perl_files_ok on $warnings_files_dir (should be 2*3 = 6 tests)";
   all_perl_files_ok( $warnings_files_dir );
 }
+
+subtest perl5_12 => sub {
+  plan tests => 1;
+
+  my $tmpdir = tempdir( CLEANUP => 1 );
+  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pl' );
+  print $fh <<'DUMMY';
+use 5.012;
+
+$x = 23;
+DUMMY
+  close $fh;
+  strict_ok($filename);
+};
 
 exit;
 
