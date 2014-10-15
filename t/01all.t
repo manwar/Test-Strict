@@ -114,17 +114,37 @@ DUMMY
 
 exit;
 
+{
+	my %data;
+	sub make_file {
+		my ($filename, $name) = @_;
+		if (not %data) {
+			my $section_name;
+			while (my $row = <DATA>) {
+				if (not $section_name) {
+					$section_name = $row;
+					chomp $section_name;
+					next;
+				}
+				if ($row =~ /^---------/) {
+					undef $section_name;
+					next;
+				}
+				die 'Undefined section_name - internal test error' if not defined $section_name;
+				$data{$section_name} .= $row;
+			}
+		}
+		open my $fh, '>', $filename or die "Could not open '$filename' for writing. $!";
+		print $fh $data{$name};
+		close $fh;
+		return $filename;
+	}
+}
+
 sub make_modern_perl_file1 {
   my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pL' );
-  print $fh <<'DUMMY';
-#!/usr/bin/perl
-use Modern::Perl;
-
-print "hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
+  return make_file("$tmpdir/abc.pL", 'modern_perl_file1');
+  #return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
 sub make_extensionless_perl_file1 {
   my $tmpdir = tempdir( CLEANUP => 1 );
@@ -252,3 +272,11 @@ DUMMY
 
   return ($tmpdir, \@files, $filename3);
 }
+
+__END__
+modern_perl_file1
+#!/usr/bin/perl
+use Modern::Perl;
+
+print "hello world";
+---------
