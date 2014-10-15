@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 40;
+my $tests = 39;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -37,9 +37,9 @@ strict_ok( 'Test::Strict' );
 warnings_ok( $0 );
 
 my $tmpdir = tempdir( CLEANUP => 1 );
-diag 'Start creating files';
+diag "Start creating files in $tmpdir";
 my $modern_perl_file1 = make_file("$tmpdir/abc.pL", 'modern_perl_file1');
-diag $modern_perl_file1;
+#diag $modern_perl_file1;
 warnings_ok( $modern_perl_file1, 'warn modern_perl1' );
 strict_ok( $modern_perl_file1, 'strict modern_perl1' );
 
@@ -47,19 +47,19 @@ strict_ok( $modern_perl_file1, 'strict modern_perl1' );
 # let's make sure that a file that is not recognized as "Perl file"
 # still lets the syntax_ok test work
 my $extensionless_file = make_file("$tmpdir/extensionless", 'extensionless');
-diag $extensionless_file;
+#diag $extensionless_file;
 ok ! Test::Strict::_is_perl_module($extensionless_file), "_is_perl_module $extensionless_file";
 ok ! Test::Strict::_is_perl_script($extensionless_file), "_is_perl_script $extensionless_file";
 warnings_ok( $extensionless_file, 'warn extensionless_file' );
 strict_ok( $extensionless_file, 'strict extensionless_file' );
 syntax_ok( $extensionless_file, 'syntax extensionless_file' );
 
-my $warning_file1 = make_warning_file1();
-diag "File1: $warning_file1";
+my $warning_file1 = make_file("$tmpdir/warning1.pL", 'warning1');
+#diag "File1: $warning_file1";
 warnings_ok( $warning_file1, 'file1' );
 
-my $warning_file2 = make_warning_file2();
-diag "File2: $warning_file2";
+my $warning_file2 = make_file("$tmpdir/warning2.pL", 'warning2');
+#diag "File2: $warning_file2";
 warnings_ok( $warning_file2, 'file2' );
 
 # TODO: does warnings::register turn on warnings?
@@ -67,15 +67,17 @@ warnings_ok( $warning_file2, 'file2' );
 #diag "File3: $warning_file3";
 #warnings_ok( $warning_file3, 'file3' );
 
-my $warning_file4 = make_warning_file4();
-diag "File4: $warning_file4";
+my $warning_file4 = make_file("$tmpdir/warning4.pm", 'warning4');
+#diag "File4: $warning_file4";
 warnings_ok( $warning_file4, 'file4' );
 
-my $warning_file5 = make_warning_file5();
-diag "File5: $warning_file5";
+my $warning_file5 = make_file("$tmpdir/warning5.pm", 'warning5');
+#diag "File5: $warning_file5";
 warnings_ok( $warning_file5, 'file5' );
 
-{
+subtest custom => sub {
+  plan tests => 2;
+
   my $warning_file6 = make_warning_file6();
   diag "File6: $warning_file6";
 
@@ -87,7 +89,7 @@ warnings_ok( $warning_file5, 'file5' );
 
   warnings_ok( $warning_file6, 'file6' );
   strict_ok( $warning_file6, 'file6' );
-}
+};
 
 {
   my ($warnings_files_dir, $files, $file_to_skip) = make_warning_files();
@@ -143,37 +145,6 @@ exit;
   #return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
 
-sub make_extensionless_perl_file1 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '' );
-  print $fh <<'DUMMY';
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
-
-
-sub make_warning_file1 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pL' );
-  print $fh <<'DUMMY';
-#!/usr/bin/perl -w
-
-print "hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
-
-sub make_warning_file2 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pL' );
-  print $fh <<'DUMMY';
-   use warnings FATAL => 'all' ;
-print "Hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
 
 sub make_warning_file3 {
   my $tmpdir = tempdir( CLEANUP => 1 );
@@ -187,28 +158,6 @@ DUMMY
   return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
 
-sub make_warning_file4 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
-  print $fh <<'DUMMY';
-use  Mouse ;
-print "Hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
-
-
-sub make_warning_file5 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
-  print $fh <<'DUMMY';
-use  Moose;
-print "Hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
 
 sub make_warning_file6 {
   my $tmpdir = tempdir( CLEANUP => 1 );
@@ -277,6 +226,27 @@ use strict;
 use warnings;
 
 print "hello world";
+
+---------
+warning1
+#!/usr/bin/perl -w
+
+print "hello world";
+
+---------
+warning2
+   use warnings FATAL => 'all' ;
+print "Hello world";
+
+---------
+warning4
+use  Mouse ;
+print "Hello world";
+
+---------
+warning5
+use  Moose;
+print "Hello world";
 
 ---------
 
