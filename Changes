@@ -1,5 +1,8 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.25 2014-10-15T19:52:00Z
+  - Update Makefile.PL to point to GitHub as bug tracking system
+
 0.24 2014-10-05T08:28:00Z
   - add Catmandu::Sane, Moo::Role, MooseX::Role::Parameterized, Role::Tiny
     to the list of modules implying strict and warnings. #6
