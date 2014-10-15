@@ -63,8 +63,7 @@ my $warning_file2 = make_file("$tmpdir/warning2.pL", 'warning2');
 warnings_ok( $warning_file2, 'file2' );
 
 # TODO: does warnings::register turn on warnings?
-#my $warning_file3 = make_warning_file3();
-#diag "File3: $warning_file3";
+#my $warning_file3 = make_file("$tmpdir/warning3.pm", 'warning3');
 #warnings_ok( $warning_file3, 'file3' );
 
 my $warning_file4 = make_file("$tmpdir/warning4.pm", 'warning4');
@@ -78,8 +77,8 @@ warnings_ok( $warning_file5, 'file5' );
 subtest custom => sub {
   plan tests => 2;
 
-  my $warning_file6 = make_warning_file6();
-  diag "File6: $warning_file6";
+  my $warning_file6 = make_file("$tmpdir/warning6.pm", 'warning6');
+  #diag "File6: $warning_file6";
 
   local @Test::Strict::MODULES_ENABLING_WARNINGS
     = (@Test::Strict::MODULES_ENABLING_WARNINGS, 'Custom');
@@ -104,14 +103,7 @@ subtest custom => sub {
 subtest perl5_12 => sub {
   plan tests => 1;
 
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pl' );
-  print $fh <<'DUMMY';
-use 5.012;
-
-$x = 23;
-DUMMY
-  close $fh;
+  my $filename = make_file("$tmpdir/perl5_12.pl", 'perl5_12');
   strict_ok($filename);
 };
 
@@ -145,30 +137,6 @@ exit;
   #return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
 
-
-sub make_warning_file3 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
-  print $fh <<'DUMMY';
-  use strict;
-   use  warnings::register ;
-print "Hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
-
-
-sub make_warning_file6 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
-  print $fh <<'DUMMY';
-use Custom;
-print "Hello world";
-
-DUMMY
-  return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
-}
 
 sub make_warning_files {
   my $tmpdir = tempdir( CLEANUP => 1 );
@@ -239,6 +207,12 @@ warning2
 print "Hello world";
 
 ---------
+warning3
+  use strict;
+   use  warnings::register ;
+print "Hello world";
+
+---------
 warning4
 use  Mouse ;
 print "Hello world";
@@ -248,5 +222,15 @@ warning5
 use  Moose;
 print "Hello world";
 
+---------
+warning6
+use Custom;
+print "Hello world";
+
+---------
+perl5_12
+use 5.012;
+
+$x = 23;
 ---------
 
