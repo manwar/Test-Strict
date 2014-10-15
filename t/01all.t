@@ -46,7 +46,7 @@ strict_ok( $modern_perl_file1, 'strict modern_perl1' );
 
 # let's make sure that a file that is not recognized as "Perl file"
 # still lets the syntax_ok test work
-my $extensionless_file = make_extensionless_perl_file1();
+my $extensionless_file = make_file("$tmpdir/extensionless", 'extensionless');
 diag $extensionless_file;
 ok ! Test::Strict::_is_perl_module($extensionless_file), "_is_perl_module $extensionless_file";
 ok ! Test::Strict::_is_perl_script($extensionless_file), "_is_perl_script $extensionless_file";
@@ -147,11 +147,6 @@ sub make_extensionless_perl_file1 {
   my $tmpdir = tempdir( CLEANUP => 1 );
   my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '' );
   print $fh <<'DUMMY';
-use strict;
-use warnings;
-
-print "hello world";
-
 DUMMY
   return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
@@ -277,3 +272,11 @@ use Modern::Perl;
 
 print "hello world";
 ---------
+extensionless
+use strict;
+use warnings;
+
+print "hello world";
+
+---------
+
