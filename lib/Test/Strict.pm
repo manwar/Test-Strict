@@ -500,7 +500,6 @@ sub _taint_switch {
 ##
 sub _module_to_path {
   my $file = shift;
-  return $file unless ($file =~ /::/);
   my @parts = split /::/, $file;
   my $module = File::Spec->catfile(@parts) . '.pm';
   foreach my $dir (@INC) {
