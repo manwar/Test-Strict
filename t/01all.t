@@ -36,8 +36,9 @@ syntax_ok( 'Test::Strict' );
 strict_ok( 'Test::Strict' );
 warnings_ok( $0 );
 
+my $tmpdir = tempdir( CLEANUP => 1 );
 diag 'Start creating files';
-my $modern_perl_file1 = make_modern_perl_file1();
+my $modern_perl_file1 = make_file("$tmpdir/abc.pL", 'modern_perl_file1');
 diag $modern_perl_file1;
 warnings_ok( $modern_perl_file1, 'warn modern_perl1' );
 strict_ok( $modern_perl_file1, 'strict modern_perl1' );
@@ -139,13 +140,9 @@ exit;
 		close $fh;
 		return $filename;
 	}
-}
-
-sub make_modern_perl_file1 {
-  my $tmpdir = tempdir( CLEANUP => 1 );
-  return make_file("$tmpdir/abc.pL", 'modern_perl_file1');
   #return $HAS_WIN32 ? Win32::GetLongPathName($filename) : $filename;
 }
+
 sub make_extensionless_perl_file1 {
   my $tmpdir = tempdir( CLEANUP => 1 );
   my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '' );
