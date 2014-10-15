@@ -67,19 +67,19 @@ use FindBin qw($Bin);
 use File::Find;
 use Config;
 
-use vars qw( $VERSION $PERL $COVERAGE_THRESHOLD $COVER $UNTAINT_PATTERN $PERL_PATTERN $CAN_USE_WARNINGS $TEST_SYNTAX $TEST_STRICT $TEST_WARNINGS $TEST_SKIP $DEVEL_COVER_OPTIONS $DEVEL_COVER_DB @MODULES_ENABLING_STRICT @MODULES_ENABLING_WARNINGS );
-$VERSION = '0.25';
-$PERL    = $^X || 'perl';
-$COVERAGE_THRESHOLD = 50; # 50%
-$UNTAINT_PATTERN    = qr|^(.*)$|;
-$PERL_PATTERN       = qr/^#!.*perl/;
-$CAN_USE_WARNINGS   = ($] >= 5.006);
-$TEST_SYNTAX   = 1;  # Check compile
-$TEST_STRICT   = 1;  # Check use strict;
-$TEST_WARNINGS = 0;  # Check use warnings;
-$TEST_SKIP     = []; # List of files to skip check
-$DEVEL_COVER_OPTIONS = '+ignore,".Test.Strict\b"';
-$DEVEL_COVER_DB      = 'cover_db';
+our $COVER;
+our $VERSION = '0.25';
+our $PERL    = $^X || 'perl';
+our $COVERAGE_THRESHOLD = 50; # 50%
+our $UNTAINT_PATTERN    = qr|^(.*)$|;
+our $PERL_PATTERN       = qr/^#!.*perl/;
+our $CAN_USE_WARNINGS   = ($] >= 5.006);
+our $TEST_SYNTAX   = 1;  # Check compile
+our $TEST_STRICT   = 1;  # Check use strict;
+our $TEST_WARNINGS = 0;  # Check use warnings;
+our $TEST_SKIP     = []; # List of files to skip check
+our $DEVEL_COVER_OPTIONS = '+ignore,".Test.Strict\b"';
+our $DEVEL_COVER_DB      = 'cover_db';
 my $IS_WINDOWS = $^O =~ /MSwin/i;
 
 my $Test  = Test::Builder->new;
@@ -241,7 +241,7 @@ List taken from https://metacpan.org/pod/Module::CPANTS::Kwalitee::Uses v95
 
 =cut
 
-@MODULES_ENABLING_STRICT = qw(
+our @MODULES_ENABLING_STRICT = qw(
   strict
   Any::Moose
   Catmandu::Sane
@@ -282,7 +282,7 @@ List taken from https://metacpan.org/pod/Module::CPANTS::Kwalitee::Uses v95
 
 =cut
 
-@MODULES_ENABLING_WARNINGS = qw(
+our @MODULES_ENABLING_WARNINGS = qw(
   warnings
   Any::Moose
   Catmandu::Sane
