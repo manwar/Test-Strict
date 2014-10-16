@@ -1,5 +1,9 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.25 2014-10-16T07:52:00Z
+  - Link to GitHub bugtracker - is it working now?
+  - Some tests refactored.
+
 0.25 2014-10-15T19:52:00Z
   - Update Makefile.PL to point to GitHub as bug tracking system
   - use 5.012; enables use strict; #7
