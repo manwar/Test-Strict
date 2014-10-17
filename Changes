@@ -2,6 +2,7 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 
 0.26
   - Add test using Test::DistManifest and Test::CheckManifest
+  - Add author test using Test::Version
 
 0.25 2014-10-16T07:52:00Z
   - Link to GitHub bugtracker - is it working now?
