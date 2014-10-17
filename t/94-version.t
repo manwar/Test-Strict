@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 
 eval q{use Test::Version 1.003001 qw( version_all_ok ), {
-        is_strict   => 0,
+        is_strict   => 1,
         has_version => 1,
     };
 };
