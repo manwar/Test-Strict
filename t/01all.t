@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 45;
+my $tests = 48;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -178,6 +178,15 @@ print "Hello world";
 
 DUMMY
   push @files, $filename4;
+
+  my ($fh5, $filename5) = tempfile( DIR => $tmpdir, SUFFIX => '.pl' );
+  print $fh5 <<'DUMMY';
+#!/usr/bin/perl -T -w
+use strict;
+print "Hello world";
+
+DUMMY
+  push @files, $filename5;
 
   return ($tmpdir, \@files, $filename3);
 }

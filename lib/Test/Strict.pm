@@ -357,7 +357,7 @@ sub _warnings_ok {
   my ($is_script, $in) = @_;
   while (<$in>) {
     if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
-      if (/perl\s+\-\w*[wW]/) {
+      if (/\s+-\w*[wW]/) {
         return 1;
       }
     }
