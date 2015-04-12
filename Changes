@@ -1,6 +1,9 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
-0.26
+0.27 2015-04-12
+  - accept -t -w   (Athos Ribeiro)
+
+0.26 2014.-10.16
   - Add test using Test::DistManifest and Test::CheckManifest
   - Add author test using Test::Version
 
