@@ -1,5 +1,8 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.28 2015-10-02
+  - Make syntax_ok check modules without '::' in their names (Petr Šabata)
+
 0.27 2015-04-12
   - accept -t -w   (Athos Ribeiro)
 
