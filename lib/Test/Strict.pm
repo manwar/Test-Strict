@@ -59,7 +59,7 @@ controlled by C<$Test::Strict::UNTAINT_PATTERN>.
 
 =cut
 
-use strict;
+use strict; use warnings;
 use 5.004;
 use Test::Builder;
 use File::Spec;
