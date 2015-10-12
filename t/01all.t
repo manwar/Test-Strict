@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 48;
+my $tests = 49;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -74,6 +74,9 @@ my $warning_file5 = make_file("$tmpdir/warning5.pm", 'warning5');
 #diag "File5: $warning_file5";
 warnings_ok( $warning_file5, 'file5' );
 
+my $warning_file7 = make_file("$tmpdir/warning7.pm", 'warning7');
+strict_ok( $warning_file7, 'file7' );
+
 subtest custom => sub {
   plan tests => 2;
 
@@ -88,6 +91,7 @@ subtest custom => sub {
 
   warnings_ok( $warning_file6, 'file6' );
   strict_ok( $warning_file6, 'file6' );
+
 };
 
 {
@@ -234,6 +238,11 @@ print "Hello world";
 ---------
 warning6
 use Custom;
+print "Hello world";
+
+---------
+warning7
+use MooX;
 print "Hello world";
 
 ---------

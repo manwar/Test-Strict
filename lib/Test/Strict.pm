@@ -257,6 +257,7 @@ our @MODULES_ENABLING_STRICT = qw(
   Mojo::Base
   Moo
   Moo::Role
+  MooX
   Moose
   Moose::Exporter
   Moose::Role
@@ -298,6 +299,7 @@ our @MODULES_ENABLING_WARNINGS = qw(
   Mojo::Base
   Moo
   Moo::Role
+  MooX
   Moose
   Moose::Exporter
   Moose::Role
