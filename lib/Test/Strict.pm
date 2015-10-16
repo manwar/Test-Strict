@@ -9,7 +9,7 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 C<Test::Strict> lets you check the syntax, presence of C<use strict;>
 and presence C<use warnings;>
 in your perl code.
-It report its results in standard C<Test::Simple> fashion:
+It report its results in standard L<Test::Simple> fashion:
 
   use Test::Strict tests => 3;
   syntax_ok( 'bin/myscript.pl' );
@@ -44,7 +44,7 @@ or
 =head1 DESCRIPTION
 
 The most basic test one can write is "does it compile ?".
-This module tests if the code compiles and play nice with C<Test::Simple> modules.
+This module tests if the code compiles and play nice with L<Test::Simple> modules.
 
 Another good practice this module can test is to "use strict;" in all perl files.
 
@@ -240,7 +240,7 @@ sub _strict_ok {
 Experimental. Returning a list of modules and pragmata that enable strict.
 To modify this list, change C<@Test::Strict::MODULES_ENABLING_STRICT>.
 
-List taken from https://metacpan.org/pod/Module::CPANTS::Kwalitee::Uses v95
+List taken from L<Module::CPANTS::Kwalitee::Uses> v95
 
 =cut
 
@@ -282,7 +282,7 @@ sub modules_enabling_strict { return @MODULES_ENABLING_STRICT }
 Experimental. Returning a list of modules and pragmata that enable warnings
 To modify this list, change C<@Test::Strict::MODULES_ENABLING_WARNINGS>.
 
-List taken from https://metacpan.org/pod/Module::CPANTS::Kwalitee::Uses v95
+List taken from L<Module::CPANTS::Kwalitee::Uses> v95
 
 =cut
 
@@ -427,7 +427,7 @@ The threshold can be modified through C<$Test::Strict::COVERAGE_THRESHOLD>.
 You may want to select which files are selected for code
 coverage through C<$Test::Strict::DEVEL_COVER_OPTIONS>,
 see L<Devel::Cover> for the list of available options.
-The default is '+ignore,"/Test/Strict\b"'. 
+The default is '+ignore,"/Test/Strict\b"'.
 
 The path to C<cover> utility can be modified through C<$Test::Strict::COVER>.
 
@@ -559,7 +559,7 @@ this may lead to some side effects.
 
 =head1 SEE ALSO
 
-L<Test::More>, L<Test::Pod>. L<Test::Distribution>, L<Test:NoWarnings>
+L<Test::More>, L<Test::Pod>. L<Test::Distribution>, L<Test::NoWarnings>
 
 =head1 REPOSITORY
 
