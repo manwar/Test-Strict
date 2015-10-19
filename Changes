@@ -1,5 +1,12 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.29 2015-10-19
+  - Updated link to github repository in the Makefile.PL script
+  - Updated bugtracker link in the Makefile.PL script.
+  - Updated x_contributors list in the Makefile.PL script
+  - Updated link to github repository in the pod document of Test::Strict package.
+  - Updated MAINTAINER section in the pod document of Test::Strict package.
+
 0.28 2015-10-02
   - Make syntax_ok check modules without '::' in their names (Petr Šabata)
 
