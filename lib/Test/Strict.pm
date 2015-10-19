@@ -563,7 +563,7 @@ L<Test::More>, L<Test::Pod>. L<Test::Distribution>, L<Test::NoWarnings>
 
 =head1 REPOSITORY
 
-L<https://github.com/szabgab/Test-Strict>
+L<https://github.com/Manwar/Test-Strict>
 
 =head1 AUTHOR
 
@@ -572,6 +572,8 @@ Pierre Denis, C<< <pdenis@gmail.com> >>.
 =head1 MAINTAINER
 
 L<Gabor Szabo|http://szabgab.com/>
+
+Mohammad S Anwar (MANWAR), C<< <mohammad.anwar at yahoo.com> >>
 
 =head1 COPYRIGHT
 

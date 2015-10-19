@@ -27,18 +27,19 @@ if (eval { ExtUtils::MakeMaker->VERSION(6.46) }) {
 		resources => {
 			repository => {
 				type       => 'git',
-				url        => 'http://github.com/szabgab/Test-Strict.git',
-				web        => 'http://github.com/szabgab/Test-Strict',
+				url        => 'http://github.com/Manwar/Test-Strict.git',
+				web        => 'http://github.com/Manwar/Test-Strict',
 				license    => 'http://dev.perl.org/licenses/',
 			},
 			bugtracker => {
-				web => 'http://github.com/szabgab/Test-Strict',
+				web => 'http://github.com/Manwar/Test-Strict',
 			},
 		},
 		x_contributors => [
 			'Gabor Szabo <szabgab@cpan.org>',
 			'Peter Vereshagin <veresc@cpan.org>',
 			'Graham Knop <haarg@cpan.org>',
+                        'Mohammad S Anwar <manwar@cpan.org>',
 		],
 	};
 }
