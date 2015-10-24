@@ -7,14 +7,13 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 =head1 SYNOPSIS
 
 C<Test::Strict> lets you check the syntax, presence of C<use strict;>
-and presence C<use warnings;>
-in your perl code.
+and presence C<use warnings;> in your perl code.
 It report its results in standard L<Test::Simple> fashion:
 
-  use Test::Strict tests => 3;
-  syntax_ok( 'bin/myscript.pl' );
-  strict_ok( 'My::Module', "use strict; in My::Module" );
-  warnings_ok( 'lib/My/Module.pm' );
+    use Test::Strict tests => 3;
+    syntax_ok( 'bin/myscript.pl' );
+    strict_ok( 'My::Module', "use strict; in My::Module" );
+    warnings_ok( 'lib/My/Module.pm' );
 
 Module authors can include the following in a t/strict.t
 and have C<Test::Strict> automatically find and check
@@ -25,21 +24,21 @@ all perl files in a module distribution:
 
 or
 
-  use Test::Strict;
-  all_perl_files_ok( @mydirs );
+    use Test::Strict;
+    all_perl_files_ok( @mydirs );
 
 C<Test::Strict> can also enforce a minimum test coverage
 the test suite should reach.
 Module authors can include the following in a t/cover.t
 and have C<Test::Strict> automatically check the test coverage:
 
-  use Test::Strict;
-  all_cover_ok( 80 );  # at least 80% coverage
+    use Test::Strict;
+    all_cover_ok( 80 );  # at least 80% coverage
 
 or
 
-  use Test::Strict;
-  all_cover_ok( 80, 't/' );
+    use Test::Strict;
+    all_cover_ok( 80, 't/' );
 
 =head1 DESCRIPTION
 
@@ -68,7 +67,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
@@ -91,22 +90,22 @@ my %file_find_arg = ($] <= 5.006) ? ()
                                       untaint_skip    => 1,
                                     );
 
-
 sub import {
-  my $self   = shift;
-  my $caller = caller;
-  {
-    no strict 'refs';
-    *{$caller.'::strict_ok'}         = \&strict_ok;
-    *{$caller.'::warnings_ok'}       = \&warnings_ok;
-    *{$caller.'::syntax_ok'}         = \&syntax_ok;
-    *{$caller.'::all_perl_files_ok'} = \&all_perl_files_ok;
-    *{$caller.'::all_cover_ok'}      = \&all_cover_ok;
-  }
-  $Test->exported_to($caller);
-  $Test->plan(@_);
-}
+    my $self   = shift;
+    my $caller = caller;
 
+    {
+        no strict 'refs';
+        *{$caller.'::strict_ok'}         = \&strict_ok;
+        *{$caller.'::warnings_ok'}       = \&warnings_ok;
+        *{$caller.'::syntax_ok'}         = \&syntax_ok;
+        *{$caller.'::all_perl_files_ok'} = \&all_perl_files_ok;
+        *{$caller.'::all_cover_ok'}      = \&all_cover_ok;
+    }
+
+    $Test->exported_to($caller);
+    $Test->plan(@_);
+}
 
 ##
 ## _all_perl_files( @dirs )
@@ -114,34 +113,34 @@ sub import {
 ## if @dir is not provided, it searches from one dir level above
 ##
 sub _all_perl_files {
-  my @all_files = _all_files(@_);
-  return grep { _is_perl_module($_) || _is_perl_script($_) } @all_files;
+    my @all_files = _all_files(@_);
+    return grep { _is_perl_module($_) || _is_perl_script($_) } @all_files;
 }
 
 sub _all_files {
-  my @base_dirs = @_ ? @_
-                     : File::Spec->catdir($Bin, $updir);
-  my @found;
-  my $want_sub = sub {
-    return if ($File::Find::dir =~ m![\\/]?CVS[\\/]|[\\/]?.svn[\\/]!); # Filter out cvs or subversion dirs/
-    return if ($File::Find::dir =~ m![\\/]?blib[\\/]libdoc$!); # Filter out pod doc in dist
-    return if ($File::Find::dir =~ m![\\/]?blib[\\/]man\d$!); # Filter out pod doc in dist
-    return unless (-f $File::Find::name && -r _);
-    return if ($File::Find::name =~ m!\.#.+?[\d\.]+$!);         # Filter out CVS backup files (.#file.revision)
-    push @found, File::Spec->canonpath( File::Spec->no_upwards( $File::Find::name ) );
-  };
-  my $find_arg = {
-                    %file_find_arg,
-                    wanted   => $want_sub,
-                    no_chdir => 1,
-                 };
-  find( $find_arg, @base_dirs); # Find all potential file candidates
+    my @base_dirs = @_ ? @_
+        : File::Spec->catdir($Bin, $updir);
+    my @found;
+    my $want_sub = sub {
+        return if ($File::Find::dir =~ m![\\/]?CVS[\\/]|[\\/]?.svn[\\/]!); # Filter out cvs or subversion dirs/
+        return if ($File::Find::dir =~ m![\\/]?blib[\\/]libdoc$!); # Filter out pod doc in dist
+        return if ($File::Find::dir =~ m![\\/]?blib[\\/]man\d$!); # Filter out pod doc in dist
+        return unless (-f $File::Find::name && -r _);
+        return if ($File::Find::name =~ m!\.#.+?[\d\.]+$!);         # Filter out CVS backup files (.#file.revision)
+        push @found, File::Spec->canonpath( File::Spec->no_upwards( $File::Find::name ) );
+    };
 
-  my $files_to_skip = $TEST_SKIP || [];
-  my %skip = map { $_ => undef } @$files_to_skip;
-  return grep { ! exists $skip{$_} } @found; # Exclude files to skip
+    my $find_arg = {
+        %file_find_arg,
+        wanted   => $want_sub,
+        no_chdir => 1,
+    };
+    find( $find_arg, @base_dirs); # Find all potential file candidates
+
+    my $files_to_skip = $TEST_SKIP || [];
+    my %skip = map { $_ => undef } @$files_to_skip;
+    return grep { ! exists $skip{$_} } @found; # Exclude files to skip
 }
-
 
 =head1 FUNCTIONS
 
@@ -155,45 +154,39 @@ For a module, the path (lib/My/Module.pm) or the name (My::Module) can be both u
 =cut
 
 sub syntax_ok {
-  my $file     = shift;
-  my $test_txt = shift || "Syntax check $file";
+    my $file     = shift;
+    my $test_txt = shift || "Syntax check $file";
 
-  $file = _module_to_path($file);
-  unless (-f $file && -r _) {
-    $Test->ok( 0, $test_txt );
-    $Test->diag( "File $file not found or not readable" );
-    return;
-  }
+    $file = _module_to_path($file);
+    unless (-f $file && -r _) {
+        $Test->ok( 0, $test_txt );
+        $Test->diag( "File $file not found or not readable" );
+        return;
+    }
 
-  my $is_script = _is_perl_script($file);
-#  if (not $is_script and not _is_perl_module($file)) {
-#    $Test->ok( 0, $test_txt );
-#    $Test->diag( "$file is not a perl module or a perl script" );
-#    return;
-#  }
+    my $is_script = _is_perl_script($file);
 
-  # Set the environment to compile the script or module
-  my $inc = join(' -I ', map{ qq{"$_"} } @INC ) || '';
-  $inc = "-I $inc" if $inc;
-  $file            = _untaint($file);
-  my $perl_bin     = _untaint($PERL);
-  local $ENV{PATH} = _untaint($ENV{PATH}) if $ENV{PATH};
+    # Set the environment to compile the script or module
+    my $inc = join(' -I ', map{ qq{"$_"} } @INC ) || '';
+    $inc = "-I $inc" if $inc;
+    $file            = _untaint($file);
+    my $perl_bin     = _untaint($PERL);
+    local $ENV{PATH} = _untaint($ENV{PATH}) if $ENV{PATH};
 
-  # Add the -t -T switches if they are set in the #! line
-  my $switch = '';
-  $switch = _taint_switch($file) || '' if $is_script;
+    # Add the -t -T switches if they are set in the #! line
+    my $switch = '';
+    $switch = _taint_switch($file) || '' if $is_script;
 
-  # Compile and check for errors
-  my $eval = `$perl_bin $inc -c$switch \"$file\" 2>&1`;
-  $file = quotemeta($file);
-  my $ok = $eval =~ qr!$file syntax OK!ms;
-  $Test->ok($ok, $test_txt);
-  unless ($ok) {
-    $Test->diag( $eval );
-  }
-  return $ok;
+    # Compile and check for errors
+    my $eval = `$perl_bin $inc -c$switch \"$file\" 2>&1`;
+    $file = quotemeta($file);
+    my $ok = $eval =~ qr!$file syntax OK!ms;
+    $Test->ok($ok, $test_txt);
+    unless ($ok) {
+        $Test->diag( $eval );
+    }
+    return $ok;
 }
-
 
 =head2 strict_ok( $file [, $text] )
 
@@ -207,32 +200,32 @@ For a module, the path (lib/My/Module.pm) or the name (My::Module) can be both u
 =cut
 
 sub strict_ok {
-  my $file     = shift;
-  my $test_txt = shift || "use strict   $file";
-  $file = _module_to_path($file);
-  open my $fh, '<', $file or do { $Test->ok(0, $test_txt); $Test->diag("Could not open $file: $!"); return; };
-  my $ok = _strict_ok($fh);
-  $Test->ok($ok, $test_txt);
-  return $ok;
+    my $file     = shift;
+    my $test_txt = shift || "use strict   $file";
+    $file = _module_to_path($file);
+    open my $fh, '<', $file or do { $Test->ok(0, $test_txt); $Test->diag("Could not open $file: $!"); return; };
+    my $ok = _strict_ok($fh);
+    $Test->ok($ok, $test_txt);
+    return $ok;
 }
 
 sub _strict_ok {
-  my ($in) = @_;
-  while (<$in>) {
-    next if (/^\s*#/); # Skip comments
-    next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
-    last if (/^\s*(__END__|__DATA__)/); # End of code
-    foreach my $name (modules_enabling_strict()) {
-      # TODO: improve this matching (e.g. see TODO test)
-      if (/\buse\s+$name(?:[;\s]|$)/) {
-        return 1;
-      }
+    my ($in) = @_;
+    while (<$in>) {
+        next if (/^\s*#/); # Skip comments
+        next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
+        last if (/^\s*(__END__|__DATA__)/); # End of code
+        foreach my $name (modules_enabling_strict()) {
+            # TODO: improve this matching (e.g. see TODO test)
+            if (/\buse\s+$name(?:[;\s]|$)/) {
+                return 1;
+            }
+        }
+        if (/\buse\s+(5.01\d+)/ and $1 >= 5.012) {
+            return 1;
+        }
     }
-    if (/\buse\s+(5.01\d+)/ and $1 >= 5.012) {
-      return 1;
-    }
-  }
-  return;
+    return;
 }
 
 =head2 modules_enabling_strict
@@ -245,34 +238,34 @@ List taken from L<Module::CPANTS::Kwalitee::Uses> v95
 =cut
 
 our @MODULES_ENABLING_STRICT = qw(
-  strict
-  Any::Moose
-  Catmandu::Sane
-  Class::Spiffy
-  Coat
-  common::sense
-  Dancer
-  Mo
-  Modern::Perl
-  Mojo::Base
-  Moo
-  Moo::Role
-  MooX
-  Moose
-  Moose::Exporter
-  Moose::Role
-  MooseX::Declare
-  MooseX::Role::Parameterized
-  MooseX::Types
-  Mouse
-  Mouse::Role
-  perl5
-  perl5i::1
-  perl5i::2
-  perl5i::latest
-  Role::Tiny
-  Spiffy
-  strictures
+    strict
+    Any::Moose
+    Catmandu::Sane
+    Class::Spiffy
+    Coat
+    common::sense
+    Dancer
+    Mo
+    Modern::Perl
+    Mojo::Base
+    Moo
+    Moo::Role
+    MooX
+    Moose
+    Moose::Exporter
+    Moose::Role
+    MooseX::Declare
+    MooseX::Role::Parameterized
+    MooseX::Types
+    Mouse
+    Mouse::Role
+    perl5
+    perl5i::1
+    perl5i::2
+    perl5i::latest
+    Role::Tiny
+    Spiffy
+    strictures
 );
 
 sub modules_enabling_strict { return @MODULES_ENABLING_STRICT }
@@ -287,34 +280,34 @@ List taken from L<Module::CPANTS::Kwalitee::Uses> v95
 =cut
 
 our @MODULES_ENABLING_WARNINGS = qw(
-  warnings
-  Any::Moose
-  Catmandu::Sane
-  Class::Spiffy
-  Coat
-  common::sense
-  Dancer
-  Mo
-  Modern::Perl
-  Mojo::Base
-  Moo
-  Moo::Role
-  MooX
-  Moose
-  Moose::Exporter
-  Moose::Role
-  MooseX::Declare
-  MooseX::Role::Parameterized
-  MooseX::Types
-  Mouse
-  Mouse::Role
-  perl5
-  perl5i::1
-  perl5i::2
-  perl5i::latest
-  Role::Tiny
-  Spiffy
-  strictures
+    warnings
+    Any::Moose
+    Catmandu::Sane
+    Class::Spiffy
+    Coat
+    common::sense
+    Dancer
+    Mo
+    Modern::Perl
+    Mojo::Base
+    Moo
+    Moo::Role
+    MooX
+    Moose
+    Moose::Exporter
+    Moose::Role
+    MooseX::Declare
+    MooseX::Role::Parameterized
+    MooseX::Types
+    Mouse
+    Mouse::Role
+    perl5
+    perl5i::1
+    perl5i::2
+    perl5i::latest
+    Role::Tiny
+    Spiffy
+    strictures
 );
 
 sub modules_enabling_warnings { return @MODULES_ENABLING_WARNINGS }
@@ -337,45 +330,45 @@ For a module, the path (lib/My/Module.pm) or the name (My::Module) can be both u
 =cut
 
 sub warnings_ok {
-  my $file = shift;
-  my $test_txt = shift || "use warnings $file";
-  $file = _module_to_path($file);
-  my $is_module = _is_perl_module( $file );
-  my $is_script = _is_perl_script( $file );
-  if (!$is_script and $is_module and ! $CAN_USE_WARNINGS) {
-    $Test->skip();
-    $Test->diag("This version of perl ($]) does not have use warnings - perl 5.6 or higher is required");
-    return;
-  }
+    my $file = shift;
+    my $test_txt = shift || "use warnings $file";
 
-  open my $fh, '<', $file or do { $Test->ok(0, $test_txt); $Test->diag("Could not open $file: $!"); return; };
-  my $ok = _warnings_ok($is_script, $fh);
-  $Test->ok($ok, $test_txt);
-  return $ok
+    $file = _module_to_path($file);
+    my $is_module = _is_perl_module( $file );
+    my $is_script = _is_perl_script( $file );
+    if (!$is_script and $is_module and ! $CAN_USE_WARNINGS) {
+        $Test->skip();
+        $Test->diag("This version of perl ($]) does not have use warnings - perl 5.6 or higher is required");
+        return;
+    }
+
+    open my $fh, '<', $file or do { $Test->ok(0, $test_txt); $Test->diag("Could not open $file: $!"); return; };
+    my $ok = _warnings_ok($is_script, $fh);
+    $Test->ok($ok, $test_txt);
+    return $ok
 }
 
 # TODO unite with _strict_ok
 sub _warnings_ok {
-  my ($is_script, $in) = @_;
-  while (<$in>) {
-    if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
-      if (/\s+-\w*[wW]/) {
-        return 1;
-      }
+    my ($is_script, $in) = @_;
+    while (<$in>) {
+        if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
+            if (/\s+-\w*[wW]/) {
+                return 1;
+            }
+        }
+        last unless $CAN_USE_WARNINGS;
+        next if (/^\s*#/); # Skip comments
+        next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
+        last if (/^\s*(__END__|__DATA__)/); # End of code
+        foreach my $name (modules_enabling_warnings()) {
+            if (/\buse\s+$name(?:[;\s]|$)/) {
+                return 1;
+            }
+        }
     }
-    last unless $CAN_USE_WARNINGS;
-    next if (/^\s*#/); # Skip comments
-    next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
-    last if (/^\s*(__END__|__DATA__)/); # End of code
-    foreach my $name (modules_enabling_warnings()) {
-      if (/\buse\s+$name(?:[;\s]|$)/) {
-        return 1;
-      }
-    }
-  }
-  return;
+    return;
 }
-
 
 =head2 all_perl_files_ok( [ @directories ] )
 
@@ -401,16 +394,15 @@ You can control which tests are run on each perl site through:
 =cut
 
 sub all_perl_files_ok {
-  my @files = _all_perl_files( @_ );
+    my @files = _all_perl_files( @_ );
 
-  _make_plan();
-  foreach my $file ( @files ) {
-    syntax_ok( $file )   if $TEST_SYNTAX;
-    strict_ok( $file )   if $TEST_STRICT;
-    warnings_ok( $file ) if $TEST_WARNINGS;
-  }
+    _make_plan();
+    foreach my $file ( @files ) {
+        syntax_ok( $file )   if $TEST_SYNTAX;
+        strict_ok( $file )   if $TEST_STRICT;
+        warnings_ok( $file ) if $TEST_WARNINGS;
+    }
 }
-
 
 =head2 all_cover_ok( [coverage_threshold [, @t_dirs]] )
 
@@ -439,116 +431,115 @@ The total coverage is the return value of C<all_cover_ok()>.
 =cut
 
 sub all_cover_ok {
-  my $threshold = shift || $COVERAGE_THRESHOLD;
-  my @dirs = @_ ? @_
-                : (File::Spec->splitpath( $0 ))[1] || '.';
-  my @all_files = grep { ! /$0$/o && $0 !~ /$_$/ }
-                  grep { _is_perl_script($_)     }
-                       _all_files(@dirs);
-  _make_plan();
+    my $threshold = shift || $COVERAGE_THRESHOLD;
+    my @dirs = @_ ? @_
+        : (File::Spec->splitpath( $0 ))[1] || '.';
+    my @all_files = grep { ! /$0$/o && $0 !~ /$_$/ }
+    grep { _is_perl_script($_) }
+    _all_files(@dirs);
+    _make_plan();
 
-  my $cover_bin    = _cover_path() or do{ $Test->skip(); $Test->diag("Cover binary not found"); return};
-  my $perl_bin     = _untaint($PERL);
-  local $ENV{PATH} = _untaint($ENV{PATH}) if $ENV{PATH};
-  if ($IS_WINDOWS and ! -d $DEVEL_COVER_DB) {
-    mkdir $DEVEL_COVER_DB or warn "$DEVEL_COVER_DB: $!";
-  }
-  my $res = `$cover_bin -delete 2>&1`;
-  if ($?) {
-    $Test->skip();
-    $Test->diag("Cover at $cover_bin got error $?: $res");
-    return;
-  }
-  foreach my $file ( @all_files ) {
-    $file = _untaint($file);
-    `$perl_bin -MDevel::Cover=$DEVEL_COVER_OPTIONS $file`;
-    $Test->ok(! $?, "Coverage captured from $file" );
-  }
-  $Test->ok(my $cover = `$cover_bin 2>&1`, "Got cover");
+    my $cover_bin    = _cover_path() or do{ $Test->skip(); $Test->diag("Cover binary not found"); return};
+    my $perl_bin     = _untaint($PERL);
+    local $ENV{PATH} = _untaint($ENV{PATH}) if $ENV{PATH};
+    if ($IS_WINDOWS and ! -d $DEVEL_COVER_DB) {
+        mkdir $DEVEL_COVER_DB or warn "$DEVEL_COVER_DB: $!";
+    }
 
-  my ($total) = ($cover =~ /^\s*Total.+?([\d\.]+)\s*$/m);
-  $Test->ok( $total >= $threshold, "coverage = ${total}% > ${threshold}%");
-  return $total;
+    my $res = `$cover_bin -delete 2>&1`;
+    if ($?) {
+        $Test->skip();
+        $Test->diag("Cover at $cover_bin got error $?: $res");
+        return;
+    }
+    foreach my $file ( @all_files ) {
+        $file = _untaint($file);
+        `$perl_bin -MDevel::Cover=$DEVEL_COVER_OPTIONS $file`;
+        $Test->ok(! $?, "Coverage captured from $file" );
+    }
+    $Test->ok(my $cover = `$cover_bin 2>&1`, "Got cover");
+
+    my ($total) = ($cover =~ /^\s*Total.+?([\d\.]+)\s*$/m);
+    $Test->ok( $total >= $threshold, "coverage = ${total}% > ${threshold}%");
+    return $total;
 }
 
-
 sub _is_perl_module {
-  $_[0] =~ /\.pm$/i
-  ||
-  $_[0] =~ /::/;
+    $_[0] =~ /\.pm$/i || $_[0] =~ /::/;
 }
 
 
 sub _is_perl_script {
-  my $file = shift;
-  return 1 if $file =~ /\.pl$/i;
-  return 1 if $file =~ /\.t$/;
-  open my $fh, '<', $file or return;
-  my $first = <$fh>;
-  return 1 if defined $first && ($first =~ $PERL_PATTERN);
-  return;
+    my $file = shift;
+
+    return 1 if $file =~ /\.pl$/i;
+    return 1 if $file =~ /\.t$/;
+    open my $fh, '<', $file or return;
+    my $first = <$fh>;
+    return 1 if defined $first && ($first =~ $PERL_PATTERN);
+    return;
 }
 
 ##
 ## Returns the taint switches -tT in the #! line of a perl script
 ##
 sub _taint_switch {
-  my $file = shift;
-  open my $fh, '<', $file or return;
-  my $first = <$fh>;
-  $first =~ /^#!.*\bperl.*\s-\w*([Tt]+)/ or return;
-  return $1;
+    my $file = shift;
+
+    open my $fh, '<', $file or return;
+    my $first = <$fh>;
+    $first =~ /^#!.*\bperl.*\s-\w*([Tt]+)/ or return;
+    return $1;
 }
 
 ##
 ## Return the path of a module
 ##
 sub _module_to_path {
-  my $file = shift;
-  my @parts = split /::/, $file;
-  my $module = File::Spec->catfile(@parts) . '.pm';
-  foreach my $dir (@INC) {
-    my $candidate = File::Spec->catfile($dir, $module);
-    next unless (-e $candidate && -f _ && -r _);
-    return $candidate;
-  }
-  return $file; # non existing file - error is catched elsewhere
+    my $file = shift;
+
+    my @parts = split /::/, $file;
+    my $module = File::Spec->catfile(@parts) . '.pm';
+    foreach my $dir (@INC) {
+        my $candidate = File::Spec->catfile($dir, $module);
+        next unless (-e $candidate && -f _ && -r _);
+        return $candidate;
+    }
+    return $file; # non existing file - error is catched elsewhere
 }
 
 
 sub _cover_path {
-  return $COVER if defined $COVER;
+    return $COVER if defined $COVER;
 
-  my $os_separator = $IS_WINDOWS ? ';' : ':';
-  foreach ((split /$os_separator/, $ENV{PATH}), @Config{qw(bin sitedir scriptdir)} ) {
-    my $path = $_ || '.';
-    my $path_cover = File::Spec->catfile($path, 'cover');
-    if ($IS_WINDOWS) {
-      next unless (-f $path_cover && -r _);
+    my $os_separator = $IS_WINDOWS ? ';' : ':';
+    foreach ((split /$os_separator/, $ENV{PATH}), @Config{qw(bin sitedir scriptdir)} ) {
+        my $path = $_ || '.';
+        my $path_cover = File::Spec->catfile($path, 'cover');
+        if ($IS_WINDOWS) {
+            next unless (-f $path_cover && -r _);
+        }
+        else {
+            next unless -x $path_cover;
+        }
+        return $COVER = _untaint($path_cover);
     }
-    else {
-      next unless -x $path_cover;
-    }
-    return $COVER = _untaint($path_cover);
-  }
-  return;
+    return;
 }
 
 
 sub _make_plan {
-  unless ($Test->has_plan) {
-    $Test->plan( 'no_plan' );
-  }
-  $Test->expected_tests;
+    unless ($Test->has_plan) {
+        $Test->plan( 'no_plan' );
+    }
+    $Test->expected_tests;
 }
-
 
 sub _untaint {
-  my @untainted = map {($_ =~ $UNTAINT_PATTERN)} @_;
-  wantarray ? @untainted
-            : $untainted[0];
+    my @untainted = map {($_ =~ $UNTAINT_PATTERN)} @_;
+    wantarray ? @untainted
+        : $untainted[0];
 }
-
 
 =head1 CAVEATS
 
@@ -563,7 +554,7 @@ L<Test::More>, L<Test::Pod>. L<Test::Distribution>, L<Test::NoWarnings>
 
 =head1 REPOSITORY
 
-L<https://github.com/Manwar/Test-Strict>
+L<https://github.com/manwar/Test-Strict>
 
 =head1 AUTHOR
 

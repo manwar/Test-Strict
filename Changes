@@ -1,5 +1,9 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.30 2015-10-24
+  - Tidied up Makefile.PL script.
+  - Removed the executable attributes from some of the unit test script.
+
 0.29 2015-10-19
   - Updated link to github repository in the Makefile.PL script
   - Updated bugtracker link in the Makefile.PL script.

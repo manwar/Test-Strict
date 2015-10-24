@@ -8,5 +8,4 @@ cover_db/
 pm_to_blib
 *.swp
 Test-Strict*
-MANIFEST
 *.bak
