@@ -8,7 +8,8 @@ my %conf = (
     AUTHOR        => 'Pierre Denis <pdenis@cpan.org>',
     VERSION_FROM  => 'lib/Test/Strict.pm',
     ABSTRACT_FROM => 'lib/Test/Strict.pm',
-    PREREQ_PM     => {
+    MIN_PERL_VERSION => 5.006,
+    PREREQ_PM        => {
         'Test::Builder' => 0.01,
         'File::Spec'    => 0.01,
         'FindBin'       => 0.01,
@@ -50,6 +51,7 @@ my %build_requires = ();
 my %test_requires  = (
     'Test::More' => '1.00',
     'File::Temp' => '0.01',
+    'IO::Scalar' => 0,
 );
 
 if (eval { ExtUtils::MakeMaker->VERSION(6.52) }) {

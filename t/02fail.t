@@ -17,6 +17,7 @@ BEGIN {
   }
 }
 
+use IO::Scalar;
 use Test::More tests => 15;
 use File::Temp qw( tempdir tempfile );
 
@@ -35,7 +36,7 @@ test5();
 TODO: {
   local $TODO = 'improve strict matching!';
   my $code = q{print "use strict "};
-  open my $fh1, '<', \$code;
+  my $fh1 = new IO::Scalar \$code;
   ok !Test::Strict::_strict_ok($fh1), 'use strict in print';
 }
 
@@ -44,7 +45,7 @@ exit;
 
 sub test1 {
   my $bad_file_content = _bad_file_content();
-  open my $fh1, '<', \$bad_file_content;
+  my $fh1 = new IO::Scalar \$bad_file_content;
   ok !Test::Strict::_strict_ok($fh1), 'bad_file';
 
   my $dir = make_bad_file();

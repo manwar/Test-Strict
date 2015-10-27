@@ -59,7 +59,7 @@ controlled by C<$Test::Strict::UNTAINT_PATTERN>.
 =cut
 
 use strict; use warnings;
-use 5.004;
+use 5.006;
 use Test::Builder;
 use File::Spec;
 use FindBin qw($Bin);
@@ -67,7 +67,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
