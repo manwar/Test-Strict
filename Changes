@@ -1,5 +1,9 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.32 2015-11-03 10:10:00 MANWAR
+- Added LICENSE file.
+- Added standard unit test script (t/00-load.t).
+
 0.31 2015-10-27 10:35:00 MANWAR
   - Upgraded the min perl version to 5.006 as proposed by Perl::MinimumVersion.
   - Added MIN_PERL_VERSION to the Makefile.PL script.
