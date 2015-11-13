@@ -15,3 +15,4 @@ t/91-pod-coverage.t
 t/92-manifest.t
 t/93-checkmanifest.t
 t/94-version.t
+t/95-changes.t
