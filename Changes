@@ -1,5 +1,8 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.34  2015-11-15 08:50:00 MANWAR
+      - Added key 'provides' to the Makefile.PL script.
+
 0.33  2015-11-13 10:35:00 MANWAR
       - Tidied up Changes file.
       - Added unit test to check Changes file (t/95-changes.t) against the standard.

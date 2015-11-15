@@ -67,7 +67,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
