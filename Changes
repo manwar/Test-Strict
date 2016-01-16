@@ -1,5 +1,8 @@
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+0.35  2016-01-16 08:45:00 MANWAR
+      - Fixed Github issue #16.
+
 0.34  2015-11-15 08:50:00 MANWAR
       - Added key 'provides' to the Makefile.PL script.
 
@@ -16,11 +19,11 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
       - Added MIN_PERL_VERSION to the Makefile.PL script.
       - Updated unit test script t/02fail.t to comply with perl 5.006.
 
-0.30  2015-10-24
+0.30  2015-10-24 MANWAR
       - Tidied up Makefile.PL script.
       - Removed the executable attributes from some of the unit test script.
 
-0.29  2015-10-19
+0.29  2015-10-19 MANWAR
       - Updated link to github repository in the Makefile.PL script
       - Updated bugtracker link in the Makefile.PL script.
       - Updated x_contributors list in the Makefile.PL script

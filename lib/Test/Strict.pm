@@ -4,6 +4,10 @@ package Test::Strict;
 
 Test::Strict - Check syntax, presence of use strict; and test coverage
 
+=head1 VERSION
+
+Version 0.35
+
 =head1 SYNOPSIS
 
 C<Test::Strict> lets you check the syntax, presence of C<use strict;>
@@ -67,7 +71,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
