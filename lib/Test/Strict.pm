@@ -6,7 +6,7 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 
 =head1 VERSION
 
-Version 0.35
+Version 0.36
 
 =head1 SYNOPSIS
 
@@ -71,7 +71,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
@@ -126,9 +126,18 @@ sub _all_files {
         : File::Spec->catdir($Bin, $updir);
     my @found;
     my $want_sub = sub {
-        return if ($File::Find::dir =~ m![\\/]?CVS[\\/]|[\\/]?.svn[\\/]!); # Filter out cvs or subversion dirs/
-        return if ($File::Find::dir =~ m![\\/]?blib[\\/]libdoc$!); # Filter out pod doc in dist
-        return if ($File::Find::dir =~ m![\\/]?blib[\\/]man\d$!); # Filter out pod doc in dist
+        #return if ($File::Find::dir =~ m![\\/]?CVS[\\/]|[\\/]?.svn[\\/]!); # Filter out cvs or subversion dirs/
+        #return if ($File::Find::dir =~ m![\\/]?blib[\\/]libdoc$!); # Filter out pod doc in dist
+        #return if ($File::Find::dir =~ m![\\/]?blib[\\/]man\d$!); # Filter out pod doc in dist
+        if (-d $File::Find::name &&
+            ($_ eq 'CVS' || $_ eq '.svn' || # Filter out cvs or subversion dirs
+             $File::Find::name =~ m!(?:^|[\\/])blib[\\/]libdoc$! || # Filter out pod doc in dist
+             $File::Find::name =~ m!(?:^|[\\/])blib[\\/]man\d$!) # Filter out pod doc in dist
+            ) {
+            $File::Find::prune = 1;
+            return;
+        }
+
         return unless (-f $File::Find::name && -r _);
         return if ($File::Find::name =~ m!\.#.+?[\d\.]+$!);         # Filter out CVS backup files (.#file.revision)
         push @found, File::Spec->canonpath( File::Spec->no_upwards( $File::Find::name ) );
@@ -568,7 +577,7 @@ Pierre Denis, C<< <pdenis@gmail.com> >>.
 
 L<Gabor Szabo|http://szabgab.com/>
 
-Mohammad S Anwar (MANWAR), C<< <mohammad.anwar at yahoo.com> >>
+Currently maintained by Mohammad S Anwar (MANWAR), C<< <mohammad.anwar at yahoo.com> >>
 
 =head1 COPYRIGHT
 
