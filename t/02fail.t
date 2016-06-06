@@ -140,14 +140,22 @@ DUMMY
   return $tmpdir;
 }
 
+sub _print_autobox_stmt_to_avoid_a_CPANTS_warnings {
+  my ($fh) = @_;
+
+  print {$fh} (lc('U' . 'S' . 'E') . " Moose::Autobox;\n");
+
+  return;
+}
+
 sub make_moose_bad_file {
   my $tmpdir = tempdir( CLEANUP => 1 );
   my ($fh, $filename) = tempfile( DIR => $tmpdir, SUFFIX => '.pm' );
   print $fh <<'DUMMY';
 # Makes methods for plain Perl types with autobox
 # No 'use Moose' here and no strictures turned on
-use Moose::Autobox;
 DUMMY
+  _print_autobox_stmt_to_avoid_a_CPANTS_warnings($fh);
   return $tmpdir;
 }
 
