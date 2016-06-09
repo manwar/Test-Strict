@@ -27,7 +27,7 @@ if (eval { ExtUtils::MakeMaker->VERSION(6.46) }) {
     $conf{META_MERGE} = {
         'meta-spec' => { version => 2 },
         provides    => {
-            'Test::Strict' => { file => 'lib/Test/Strict.pm', version => '0.36' },
+            'Test::Strict' => { file => 'lib/Test/Strict.pm', version => '0.37' },
         },
         resources   => {
             repository  => {

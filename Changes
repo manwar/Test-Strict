@@ -1,4 +1,7 @@
-Test::Strict - Check syntax, presence of use strict; and test coverage
+Revision history for Test::Strict.
+
+0.37  2016-06-09 10:30:00 MANWAR
+      - Merged pull request #19, thanks @shlomif.
 
 0.36  2016-01-17 02:10:00 MANWAR
       - Fixed issue RT# 55112 (svn directories incorrectly filtered out).
