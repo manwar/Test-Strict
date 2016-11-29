@@ -224,6 +224,7 @@ sub strict_ok {
 
 sub _strict_ok {
     my ($in) = @_;
+    local $_;
     while (<$in>) {
         next if (/^\s*#/); # Skip comments
         next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
@@ -367,6 +368,7 @@ sub warnings_ok {
 # TODO unite with _strict_ok
 sub _warnings_ok {
     my ($is_script, $in) = @_;
+    local $_;
     while (<$in>) {
         if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
             if (/\s+-\w*[wW]/) {
