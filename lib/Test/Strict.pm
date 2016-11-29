@@ -237,6 +237,9 @@ sub _strict_ok {
         if (/\buse\s+(5\.\d+)/ and $1 >= 5.012) {
             return 1;
         }
+        if (/\buse\s+v5\.(\d+)/ and $1 >= 12) {
+            return 1;
+        }
     }
     return;
 }
