@@ -258,6 +258,8 @@ our @MODULES_ENABLING_STRICT = qw(
     Coat
     common::sense
     Dancer
+    HTML::FormHandler::Moose
+    HTML::FormHandler::Moose::Role
     Mo
     Modern::Perl
     Mojo::Base
@@ -300,6 +302,8 @@ our @MODULES_ENABLING_WARNINGS = qw(
     Coat
     common::sense
     Dancer
+    HTML::FormHandler::Moose
+    HTML::FormHandler::Moose::Role
     Mo
     Modern::Perl
     Mojo::Base
