@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 53;
+my $tests = 55;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -108,6 +108,20 @@ subtest perl5_12 => sub {
   plan tests => 1;
 
   my $filename = make_file("$tmpdir/perl5_12.pl", 'perl5_12');
+  strict_ok($filename);
+};
+
+subtest perl5_20 => sub {
+  plan tests => 1;
+
+  my $filename = make_file("$tmpdir/perl5_20.pl", 'perl5_20');
+  strict_ok($filename);
+};
+
+subtest perl_v5_12 => sub {
+  plan tests => 1;
+
+  my $filename = make_file("$tmpdir/perl_v5_12.pl", 'perl_v5_12');
   strict_ok($filename);
 };
 
@@ -248,6 +262,18 @@ print "Hello world";
 ---------
 perl5_12
 use 5.012;
+
+$x = 23;
+---------
+
+perl5_20
+use 5.020;
+
+$x = 23;
+---------
+
+perl_v5_12
+use v5.12;
 
 $x = 23;
 ---------

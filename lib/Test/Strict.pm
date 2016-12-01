@@ -224,6 +224,7 @@ sub strict_ok {
 
 sub _strict_ok {
     my ($in) = @_;
+    local $_;
     while (<$in>) {
         next if (/^\s*#/); # Skip comments
         next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
@@ -234,7 +235,10 @@ sub _strict_ok {
                 return 1;
             }
         }
-        if (/\buse\s+(5.01\d+)/ and $1 >= 5.012) {
+        if (/\buse\s+(5\.\d+)/ and $1 >= 5.012) {
+            return 1;
+        }
+        if (/\buse\s+v5\.(\d+)/ and $1 >= 12) {
             return 1;
         }
     }
@@ -368,6 +372,7 @@ sub warnings_ok {
 # TODO unite with _strict_ok
 sub _warnings_ok {
     my ($is_script, $in) = @_;
+    local $_;
     while (<$in>) {
         if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
             if (/\s+-\w*[wW]/) {
