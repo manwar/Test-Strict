@@ -6,7 +6,7 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 
 =head1 VERSION
 
-Version 0.38
+Version 0.39
 
 =head1 SYNOPSIS
 
@@ -71,7 +71,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
