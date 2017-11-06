@@ -180,8 +180,8 @@ sub syntax_ok {
     my $is_script = _is_perl_script($file);
 
     # Set the environment to compile the script or module
-    my $inc = join(' -I ', map{ qq{"$_"} } @INC ) || '';
-    $inc = "-I $inc" if $inc;
+    require Config;
+    my $inc = join($Config::Config{path_sep}, @INC) || '';
     $file            = _untaint($file);
     my $perl_bin     = _untaint($PERL);
     local $ENV{PATH} = _untaint($ENV{PATH}) if $ENV{PATH};
@@ -191,7 +191,10 @@ sub syntax_ok {
     $switch = _taint_switch($file) || '' if $is_script;
 
     # Compile and check for errors
-    my $eval = `$perl_bin $inc -c$switch \"$file\" 2>&1`;
+    my $eval =  do {
+        local $ENV{PERL5LIB} = $inc;
+        `$perl_bin -c$switch \"$file\" 2>&1`;
+    };
     $file = quotemeta($file);
     my $ok = $eval =~ qr!$file syntax OK!ms;
     $Test->ok($ok, $test_txt);
