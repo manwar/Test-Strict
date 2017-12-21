@@ -225,19 +225,22 @@ sub strict_ok {
     return $ok;
 }
 
+sub _module_rx {
+    my (@module_names) = @_;
+    my $names = join '|', map quotemeta, reverse sort @module_names;
+    # TODO: improve this matching (e.g. see TODO test)
+    return qr/\buse\s+(?:$names)(?:[;\s]|$)/;
+}
+
 sub _strict_ok {
     my ($in) = @_;
+    my $strict_module_rx = _module_rx( modules_enabling_strict() );
     local $_;
     while (<$in>) {
         next if (/^\s*#/); # Skip comments
         next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
         last if (/^\s*(__END__|__DATA__)/); # End of code
-        foreach my $name (modules_enabling_strict()) {
-            # TODO: improve this matching (e.g. see TODO test)
-            if (/\buse\s+$name(?:[;\s]|$)/) {
-                return 1;
-            }
-        }
+        return 1 if $_ =~ $strict_module_rx;
         if (/\buse\s+(5\.\d+)/ and $1 >= 5.012) {
             return 1;
         }
@@ -377,6 +380,7 @@ sub warnings_ok {
 # TODO unite with _strict_ok
 sub _warnings_ok {
     my ($is_script, $in) = @_;
+    my $warnings_module_rx = _module_rx( modules_enabling_warnings() );
     local $_;
     while (<$in>) {
         if ($. == 1 and $is_script and $_ =~ $PERL_PATTERN) {
@@ -388,11 +392,7 @@ sub _warnings_ok {
         next if (/^\s*#/); # Skip comments
         next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
         last if (/^\s*(__END__|__DATA__)/); # End of code
-        foreach my $name (modules_enabling_warnings()) {
-            if (/\buse\s+$name(?:[;\s]|$)/) {
-                return 1;
-            }
-        }
+        return 1 if $_ =~ $warnings_module_rx;
     }
     return;
 }
