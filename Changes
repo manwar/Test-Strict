@@ -1,5 +1,8 @@
 Revision history for Test::Strict.
 
+0.43  2018-02-20 15:00:00 MANWAR
+      - Bumped the version.
+
 0.42  2018-02-20 13:00:00 MANWAR
       - Addressed issue #17, (Devel::Cover no longer prereq).
 
