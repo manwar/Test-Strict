@@ -14,7 +14,6 @@ my %conf = (
         'File::Spec'    => 0.01,
         'FindBin'       => 0.01,
         'File::Find'    => 0.01,
-        'Devel::Cover'  => 0.43,
         'File::Temp'    => 0.01,
     },
 );
