@@ -1,5 +1,8 @@
 Revision history for Test::Strict.
 
+0.44  2018-02-21 19:20:00 MANWAR
+      - Added key 'clean' and 'dist' to Makefile.PL script.
+
 0.43  2018-02-20 15:00:00 MANWAR
       - Bumped the version.
 
