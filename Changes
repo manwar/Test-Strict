@@ -1,5 +1,7 @@
 Revision history for Test::Strict.
 
+      - Added Test::Most to modules with strictures, #27 @robrwo
+
 0.47  2018-07-07 18:00:00 MANWAR
       - Upgraded version.
 
