@@ -291,6 +291,7 @@ our @MODULES_ENABLING_STRICT = qw(
     Role::Tiny
     Spiffy
     strictures
+    Test::Most
     Test::Roo
 );
 
@@ -336,6 +337,7 @@ our @MODULES_ENABLING_WARNINGS = qw(
     Role::Tiny
     Spiffy
     strictures
+    Test::Most
     Test::Roo
 );
 
