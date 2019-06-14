@@ -1,5 +1,8 @@
 Revision history for Test::Strict.
 
+0.50  2019-06-14 15:30:00 MANWAR
+      - Added Test::Roo::Role to the list (Issue #29).
+
 0.49  2019-06-13 12:20:00 MANWAR
       - Fixed CPANTS issue (main_module_version_matches_dist_version).
 

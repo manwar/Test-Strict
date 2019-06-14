@@ -6,7 +6,7 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 
 =head1 VERSION
 
-Version 0.49
+Version 0.50
 
 =head1 SYNOPSIS
 
@@ -71,7 +71,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
@@ -293,6 +293,7 @@ our @MODULES_ENABLING_STRICT = qw(
     strictures
     Test::Most
     Test::Roo
+    Test::Roo::Role
 );
 
 sub modules_enabling_strict { return @MODULES_ENABLING_STRICT }
@@ -339,6 +340,7 @@ our @MODULES_ENABLING_WARNINGS = qw(
     strictures
     Test::Most
     Test::Roo
+    Test::Roo::Role
 );
 
 sub modules_enabling_warnings { return @MODULES_ENABLING_WARNINGS }
