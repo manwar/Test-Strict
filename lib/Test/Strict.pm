@@ -6,7 +6,7 @@ Test::Strict - Check syntax, presence of use strict; and test coverage
 
 =head1 VERSION
 
-Version 0.51
+Version 0.52
 
 =head1 SYNOPSIS
 
@@ -71,7 +71,7 @@ use File::Find;
 use Config;
 
 our $COVER;
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 our $PERL    = $^X || 'perl';
 our $COVERAGE_THRESHOLD = 50; # 50%
 our $UNTAINT_PATTERN    = qr|^(.*)$|;
@@ -236,9 +236,12 @@ sub _strict_ok {
     my ($in) = @_;
     my $strict_module_rx = _module_rx( modules_enabling_strict() );
     local $_;
+    my $pod;
     while (<$in>) {
         next if (/^\s*#/); # Skip comments
-        next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
+        $pod = 0, next if /^=(cut|back|end)/;
+        $pod = 1, next if /^=\S+/;
+        next if $pod; # skip pod
         last if (/^\s*(__END__|__DATA__)/); # End of code
         return 1 if $_ =~ $strict_module_rx;
         if (/\buse\s+(5\.\d+)/ and $1 >= 5.012) {

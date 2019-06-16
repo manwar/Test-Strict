@@ -1,5 +1,8 @@
 Revision history for Test::Strict.
 
+0.52  2019-06-16 10:10:00 MANWAR
+      - Applied patch provided by Matthew (Issue #25).
+
 0.51  2019-06-15 06:30:00 MANWAR
       - Now ignores .git folder (Issue #26).
 
