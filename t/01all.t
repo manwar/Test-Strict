@@ -125,8 +125,6 @@ subtest perl_v5_12 => sub {
   strict_ok($filename);
 };
 
-exit;
-
 {
 	my %data;
 	sub make_file {
@@ -172,7 +170,7 @@ sub make_warning_files {
 
   my ($fh2, $filename2) = tempfile( DIR => $tmpdir, SUFFIX => '.pl' );
   print $fh2 <<'DUMMY';
-#!/usr/bin/perl -vw
+#!/usr/bin/perl -w
 use strict;
 print "Hello world";
 
