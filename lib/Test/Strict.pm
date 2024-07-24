@@ -130,7 +130,7 @@ sub _all_files {
         #return if ($File::Find::dir =~ m![\\/]?blib[\\/]libdoc$!); # Filter out pod doc in dist
         #return if ($File::Find::dir =~ m![\\/]?blib[\\/]man\d$!); # Filter out pod doc in dist
         if (-d $File::Find::name &&
-            ($_ eq 'CVS' || $_ eq '.svn' || $_ eq '.git' || # Filter out cvs or git or subversion dirs
+            ($File::Find::name =~ m!(?:^|[\\/])(?:CVS|\.svn|\.git)$! || # Filter out cvs or git or subversion dirs
              $File::Find::name =~ m!(?:^|[\\/])blib[\\/]libdoc$! || # Filter out pod doc in dist
              $File::Find::name =~ m!(?:^|[\\/])blib[\\/]man\d$!) # Filter out pod doc in dist
             ) {
