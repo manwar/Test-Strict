@@ -400,6 +400,12 @@ sub _warnings_ok {
         next if (/^\s*=.+/ .. /^\s*=(cut|back|end)/); # Skip pod
         last if (/^\s*(__END__|__DATA__)/); # End of code
         return 1 if $_ =~ $warnings_module_rx;
+        if (/\buse\s+(5\.\d+)/ and $1 >= 5.035) {
+            return 1;
+        }
+        if (/\buse\s+v5\.(\d+)/ and $1 >= 35) {
+            return 1;
+        }
     }
     return;
 }

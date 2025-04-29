@@ -15,7 +15,7 @@ if ($^O =~ /MSWin/i) { # Load Win32 if we are under Windows and if module is ava
   }
 }
 
-my $tests = 55;
+my $tests = 56;
 $tests += 2 if -e 'blib/lib/Test/Strict.pm';
 plan  tests => $tests;
 
@@ -76,6 +76,9 @@ warnings_ok( $warning_file5, 'file5' );
 
 my $warning_file7 = make_file("$tmpdir/warning7.pm", 'warning7');
 strict_ok( $warning_file7, 'file7' );
+
+my $warning_file8 = make_file("$tmpdir/warning8.pm", 'warning8');
+warnings_ok( $warning_file8, 'file8' );
 
 subtest custom => sub {
   plan tests => 2;
@@ -274,4 +277,9 @@ perl_v5_12
 use v5.12;
 
 $x = 23;
+---------
+warning8
+use v5.35;
+
+$x=23;
 ---------
